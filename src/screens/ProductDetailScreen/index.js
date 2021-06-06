@@ -7,7 +7,8 @@ import ImageSlider from "../../components/ImageSlider";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../redux/product/productSlice";
-
+import { WIDTH } from "../../utils/screenSize";
+import HTML from "react-native-render-html";
 export default function ProductDetailScreen({ route }) {
     const slug = "brown-ukulele-21-inch";
     let url = "/wp-json/wc/v3/products?slug=" + route.params.slug;
@@ -35,8 +36,8 @@ export default function ProductDetailScreen({ route }) {
     if (isResolved) {
         const res = response[0];
         console.log(res);
-        const { price, name, on_sale, regular_price } = res;
-        const images = res.images.map((img) => img.src);
+        const { price, name, on_sale, description, regular_price } = res;
+        const images = res?.images.map((img) => img.src);
 
         return (
             <ScrollView>
@@ -47,6 +48,8 @@ export default function ProductDetailScreen({ route }) {
                         Rs. <SalePrice>{on_sale && regular_price} </SalePrice>
                         {price}
                     </Text>
+
+                    <HTML source={{ html: description }} contentWidth={WIDTH} />
                 </View>
             </ScrollView>
         );

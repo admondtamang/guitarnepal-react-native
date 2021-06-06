@@ -5,8 +5,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components";
 import SkeletonArticle from "../../components/Skeleton/SkeletonArticle";
 import useFetch from "../../utils/hooks/useFetch";
+import { List, ListItem, Thumbnail, Left, Body, Right, Button } from "native-base";
+import { useNavigation } from "@react-navigation/core";
 
 const SearchScreen = () => {
+    const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = React.useState("");
     const url = "wp-json/wc/v3/products?search=" + searchQuery;
 
@@ -18,17 +21,38 @@ const SearchScreen = () => {
 
     const onChangeSearch = (query) => setSearchQuery(query);
 
-    if (isRejected) {
-        console.log(error);
-        return <Title>Cannot load data.</Title>;
-    }
+    const renderItem = ({ item }) => {
+        const onPress = () => {
+            navigation.navigate("ProductDetail", {
+                slug: item.slug,
+            });
+        };
+        return (
+            <ListItem thumbnail>
+                <Left>
+                    {console.log(item)}
+                    <Thumbnail square source={{ uri: item.images[0]?.src }} />
+                </Left>
+                <Body>
+                    <Text>{item.name}</Text>
+                    <Text note numberOfLines={1}>
+                        Rs. {item.price}
+                    </Text>
+                </Body>
+                <Right>
+                    <Button onPress={onPress} transparent>
+                        <Text>View</Text>
+                    </Button>
+                </Right>
+            </ListItem>
+        );
+    };
 
-    const renderItem = ({ item }) => <Text>{item.name}</Text>;
-    console.log(response);
     return (
         <SafeAreaView style={{ flex: 1, padding: 10 }}>
             <Searchbar placeholder="Type Article title, news or share" onChangeText={onChangeSearch} value={searchQuery} />
 
+            {isRejected && <Title>Cannot load data.</Title>}
             {isLoading && (
                 <>
                     <SkeletonArticle />
@@ -37,13 +61,15 @@ const SearchScreen = () => {
                 </>
             )}
             {isResolved && (
-                <FlatList
-                    data={response}
-                    renderItem={renderItem}
-                    ListHeaderComponent={<Title>Search {searchQuery && `"${searchQuery}"`}</Title>}
-                    keyExtractor={(item) => item?.id.toString()}
-                    ListEmptyComponent={<Text>No Instrument Found</Text>}
-                />
+                <List>
+                    <FlatList
+                        data={response}
+                        renderItem={renderItem}
+                        ListHeaderComponent={<Title>Search {searchQuery && `"${searchQuery}"`}</Title>}
+                        keyExtractor={(item) => item?.id.toString()}
+                        ListEmptyComponent={<Text>No Instrument Found</Text>}
+                    />
+                </List>
             )}
         </SafeAreaView>
     );
