@@ -4,9 +4,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import TabNavigator from "./TabNavigator";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import ProductDetailScreen from "../screens/ProductDetailScreen";
 import SearchScreen from "../screens/SearchScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function StackNavigator() {
     const Stack = createStackNavigator();
@@ -15,12 +15,10 @@ export default function StackNavigator() {
     useEffect(() => {
         AsyncStorage.getItem("onboardin").then((value) => {
             if (value === null) {
-                console.log("hello ---onboarding");
                 AsyncStorage.setItem("onboardin", "true");
                 setIsFirstLaunch(true);
             } else {
                 setIsFirstLaunch(false);
-                console.log("hello ---fasle");
             }
         });
     }, []);
@@ -32,9 +30,16 @@ export default function StackNavigator() {
             <Stack.Navigator initialRouteName={isFirstLaunch ? "OnBoarding" : "TabNavigator"}>
                 <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
-                {/* <Stack.Screen name="ArticleDetail" component={ArticleDetail} />
-            <Stack.Screen name="Search" component={SearchScreen} /> */}
+                <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+                <Stack.Screen name="Search" component={SearchScreen} />
             </Stack.Navigator>
         );
-    } else <SearchScreen />;
+    } else
+        return (
+            <Stack.Navigator>
+                <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
+                <Stack.Screen name="Search" component={SearchScreen} />
+                <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+            </Stack.Navigator>
+        );
 }

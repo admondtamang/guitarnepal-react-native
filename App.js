@@ -1,8 +1,9 @@
 import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import Root from "./src";
-// import { LogBox } from "react-native";
-// import store from "./src/redux/configureStore";
-// import { Provider } from "react-redux";
+import { LogBox } from "react-native";
+import store from "./src/redux/configureStore";
+import { Provider } from "react-redux";
 // import { PersistGate } from "redux-persist/integration/react";
 
 // import { persistStore } from "redux-persist";
@@ -10,14 +11,16 @@ import Root from "./src";
 export default function App() {
     // Ignore log notification by message:
 
-    // LogBox.ignoreAllLogs(true);
+    LogBox.ignoreAllLogs(true);
     // let persistor = persistStore(store);
 
     return (
-        // <Provider store={store}>
-        //     <PersistGate loading={null} persistor={persistor}>
-        <Root />
-        //     </PersistGate>
-        // </Provider>
+        <Provider store={store}>
+            {/* <PersistGate loading={null} persistor={persistor}> */}
+            <SafeAreaProvider>
+                <Root />
+            </SafeAreaProvider>
+            {/* </PersistGate> */}
+        </Provider>
     );
 }

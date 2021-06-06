@@ -3,31 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const user = createSlice({
     name: "user",
     initialState: {
-        data: null,
-        darkMode: false,
+        user: {},
     },
-
     reducers: {
-        login: (state, action) => {
+        addUser: (state, action) => {
             return {
                 ...state,
-                data: action.payload,
+                user: action.payload,
             };
         },
-        logout: (state) => {
+        removeUser: (state, action) => {
             return {
                 ...state,
-                data: null,
-            };
-        },
-        switchDarkMode: (state) => {
-            return {
-                ...state,
-                darkMode: !state.darkMode,
+                user: {},
             };
         },
     },
 });
 
-export const { login, logout, switchDarkMode } = user.actions;
+export const { addUser, removeUser } = user.actions;
+// export const { ADD_TO_CART, REMOVE_FROM_CART } = user.actions;
 export default user.reducer;

@@ -1,52 +1,56 @@
-import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text } from "react-native";
+import { FlatList, StyleSheet, Text } from "react-native";
 import { Searchbar, Title } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components";
-// import Article from "../../components/Article";
 import SkeletonArticle from "../../components/Skeleton/SkeletonArticle";
-import useFetch from "../../components/UseFetch";
-
-const Container = styled.SafeAreaView`
-    padding: 30px 10px;
-`;
+import useFetch from "../../utils/hooks/useFetch";
 
 const SearchScreen = () => {
     const [searchQuery, setSearchQuery] = React.useState("");
-    const url = "https://www.thevisitx.com/wp-json/wp/v2/posts?search=" + searchQuery + "&per_page=10";
+    const url = "wp-json/wc/v3/products?search=" + searchQuery;
 
-    const { response, error, isLoading } = useFetch(url);
+    const {
+        response,
+        error,
+        status: { isLoading, isRejected, isResolved },
+    } = useFetch(url);
 
     const onChangeSearch = (query) => setSearchQuery(query);
 
-    if (error) {
-        return <Title>Cannot load data</Title>;
+    if (isRejected) {
+        console.log(error);
+        return <Title>Cannot load data.</Title>;
     }
 
-    const renderItem = ({ item }) => <Text>hello</Text>;
-
+    const renderItem = ({ item }) => <Text>{item.name}</Text>;
+    console.log(response);
     return (
-        <Container>
-            <StatusBar />
+        <SafeAreaView style={{ flex: 1, padding: 10 }}>
             <Searchbar placeholder="Type Article title, news or share" onChangeText={onChangeSearch} value={searchQuery} />
 
-            {isLoading ? (
+            {isLoading && (
                 <>
                     <SkeletonArticle />
                     <SkeletonArticle />
                     <SkeletonArticle />
                 </>
-            ) : (
+            )}
+            {isResolved && (
                 <FlatList
                     data={response}
                     renderItem={renderItem}
                     ListHeaderComponent={<Title>Search {searchQuery && `"${searchQuery}"`}</Title>}
                     keyExtractor={(item) => item?.id.toString()}
-                    ListEmptyComponent={<Text>Empty</Text>}
+                    ListEmptyComponent={<Text>No Instrument Found</Text>}
                 />
             )}
-        </Container>
+        </SafeAreaView>
     );
 };
+
+const Container = styled.SafeAreaView`
+    flex: 1;
+`;
 
 export default SearchScreen;

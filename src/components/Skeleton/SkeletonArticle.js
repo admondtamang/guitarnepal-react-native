@@ -26,7 +26,7 @@ export default function SkeletonArticle() {
                         // flexBasis: "30%",
                         width: 100,
                         height: 110,
-                        borderRadius: 5,
+                        borderRadius: 10,
                     }}
                 />
             </View>
