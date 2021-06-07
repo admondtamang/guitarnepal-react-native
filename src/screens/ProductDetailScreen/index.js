@@ -10,14 +10,14 @@ import { fetchProduct } from "../../redux/product/productSlice";
 import { WIDTH } from "../../utils/screenSize";
 import HTML from "react-native-render-html";
 export default function ProductDetailScreen({ route }) {
-    const slug = "brown-ukulele-21-inch";
-    let url = "/wp-json/wc/v3/products?slug=" + route.params.slug;
+    const slug = route.params.slug;
+    let url = "/wp-json/wc/v3/products?slug=" + slug;
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product);
 
-    console.log(product);
+    // console.log(product);
     useEffect(() => {
-        dispatch(fetchProduct());
+        dispatch(fetchProduct(slug));
     }, []);
 
     const {
@@ -35,7 +35,7 @@ export default function ProductDetailScreen({ route }) {
 
     if (isResolved) {
         const res = response[0];
-        console.log(res);
+        // console.log(res);
         const { price, name, on_sale, description, regular_price } = res;
         const images = res?.images.map((img) => img.src);
 

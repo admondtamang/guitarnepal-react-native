@@ -9,13 +9,12 @@ import { getSingleProduct, getProductVariations } from "../../api/products";
 
 export const fetchProduct = createAsyncThunk("product/fetchProduct", async (id, { dispatch }) => {
     const res = await getSingleProduct(id);
-    dispatch(fetchProductVariations(id));
+    if (res[0].variations.length !== 0) dispatch(fetchProductVariations(id));
     return res;
 });
 
 export const fetchProductVariations = createAsyncThunk("product/fetchProductVariation", async (id) => {
     const res = await getProductVariations(id);
-    console.log(res);
     return res;
 });
 
