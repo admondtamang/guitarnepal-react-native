@@ -8,6 +8,7 @@ import ProductDetailScreen from "../screens/ProductDetailScreen";
 import SearchScreen from "../screens/SearchScreen";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProductCategory from "../screens/ProductCategory";
+import CategoriesList from "../screens/CategoriesList";
 
 export default function StackNavigator() {
     const Stack = createStackNavigator();
@@ -38,8 +39,9 @@ export default function StackNavigator() {
     // } else
     return (
         <Stack.Navigator>
-            <Stack.Screen name="ProductCategory" component={ProductCategory} options={{ headerShown: false }} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="Categories" component={CategoriesList} options={{ headerShown: false }} />
+            <Stack.Screen name="ProductCategory" component={ProductCategory} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} />
             <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
         </Stack.Navigator>

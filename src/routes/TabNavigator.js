@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../screens/Home";
 import { MaterialIcons } from "@expo/vector-icons";
 import SearchScreen from "../screens/SearchScreen";
+import CategoriesList from "../screens/CategoriesList";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +24,6 @@ const TabNavigator = () => {
                     tabBarIcon: ({ color, size }) => <MaterialIcons name="home" color={color} size={size} />,
                 }}
             />
-
             <Tab.Screen
                 name="Search"
                 component={SearchScreen}
@@ -32,7 +32,14 @@ const TabNavigator = () => {
                     tabBarIcon: ({ color, size }) => <MaterialIcons name="search" size={size} color={color} />,
                 }}
             />
-
+            <Tab.Screen
+                name="Categories"
+                component={CategoriesList}
+                options={{
+                    tabBarLabel: "Categories",
+                    tabBarIcon: ({ color, size }) => <MaterialIcons name="category" size={size} color={color} />,
+                }}
+            />
             {/* <Tab.Screen
                 name="User"
                 component={User}

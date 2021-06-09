@@ -5,13 +5,13 @@ export default function ImageSlider({ images }) {
     return (
         <SliderBox
             images={images}
-            sliderBoxHeight={450}
+            sliderBoxHeight={200}
             dotColor="#FFEE58"
             inactiveDotColor="#90A4AE"
             paginationBoxVerticalPadding={20}
             // autoplay
             circleLoop
-            // ImageComponentStyle={{ borderRadius: 15, width: "97%", marginTop: 5 }}
+            ImageComponentStyle={{ borderRadius: 15, width: "97%", marginTop: 5 }}
             resizeMethod={"resize"}
             resizeMode={"cover"}
         />

@@ -7,6 +7,8 @@ import Product from "../Product";
 import { WIDTH } from "../../utils/screenSize";
 
 import useFetch from "../../utils/hooks/useFetch";
+import Loading from "../Loading";
+import ImageSlider from "../ImageSlider";
 export default function TopTabBarContent() {
     const numColumns = 2;
     const url = "wp-json/wc/v3/products?featured=true";
@@ -21,7 +23,7 @@ export default function TopTabBarContent() {
         return <Text>Cannot load data...</Text>;
     }
     if (isLoading) {
-        return <Text>Loading...</Text>;
+        return <Loading />;
     }
 
     const formatData = (data, numColumns) => {
@@ -50,22 +52,31 @@ export default function TopTabBarContent() {
         }
         return <Product productHeight={WIDTH / numColumns} item={item} />;
     };
+    const images = ["https://wallpapercave.com/wp/wp3145662.jpg", "https://themepack.me/i/c/749x467/media/g/774/guitar-theme-ha17.jpg"];
 
     if (isResolved)
         return (
             // <Container>
             <FlatList
+                nestedScrollEnabled
                 data={formatData(response, numColumns)}
                 columnWrapperStyle={{ justifyContent: "space-between" }}
-                ListHeaderComponent={<MyCarousel />}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}
-                ListHeaderComponent={<Title>Featured</Title>}
+                ListHeaderComponent={
+                    <>
+                        {/* <ImageSlider images={images} /> */}
+                        <MyCarousel />
+                        <Title>Featured</Title>
+                    </>
+                }
                 numColumns={numColumns}
                 style={{ padding: 10 }}
                 ListEmptyComponent={showEmptyListView}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
             />
-            // </Container>
+            /* </Container> */
         );
 }
 const Container = styled.ScrollView`

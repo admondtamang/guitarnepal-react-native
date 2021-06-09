@@ -6,8 +6,8 @@ import TopNav from "../../routes/HomeTopTabs";
 
 import { useNavigation, useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
+import SafeAreaContainer from "../../components/SafeAreaContainer";
 export default function Home() {
     const navigation = useNavigation();
     const { colors } = useTheme();
@@ -17,7 +17,7 @@ export default function Home() {
     };
 
     return (
-        <SafeAreaView style={{ backgroundColor: colors.background, flex: 1 }}>
+        <SafeAreaContainer style={{ backgroundColor: colors.background }}>
             {/* header */}
             <Header>
                 <TouchableOpacity onPress={onPress}>
@@ -31,7 +31,7 @@ export default function Home() {
 
             {/* Navigation */}
             <TopNav />
-        </SafeAreaView>
+        </SafeAreaContainer>
     );
 }
 
@@ -41,5 +41,3 @@ const Header = styled.View`
     flex-direction: row;
     justify-content: space-between;
 `;
-
-const StyledSafeArea = styled.SafeAreaView``;

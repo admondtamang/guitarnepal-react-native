@@ -2,6 +2,8 @@ import * as React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import colors from "../utils/colors";
 import Latest from "../components/Latest";
+import Brand from "../screens/Home/Brands";
+import Traditional from "../screens/Home/Traditional";
 const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
@@ -36,8 +38,8 @@ export default function MyTabs() {
             }}
         >
             <Tab.Screen name="Latest" component={Latest} />
-            <Tab.Screen name="Best" component={Latest} />
-            <Tab.Screen name="Traditional" component={Latest} />
+            <Tab.Screen name="Brand" component={Brand} />
+            <Tab.Screen name="Traditional" component={Traditional} />
         </Tab.Navigator>
     );
 }

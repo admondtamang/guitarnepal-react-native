@@ -1,13 +1,12 @@
 import * as React from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 import { Searchbar, Title } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components";
 import SkeletonArticle from "../../components/Skeleton/SkeletonArticle";
 import useFetch from "../../utils/hooks/useFetch";
 import { List, ListItem, Thumbnail, Left, Body, Right, Button } from "native-base";
 import { useNavigation } from "@react-navigation/core";
-
+import SafeAreaContainer from "../../components/SafeAreaContainer";
 const SearchScreen = () => {
     const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = React.useState("");
@@ -49,7 +48,7 @@ const SearchScreen = () => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, padding: 10 }}>
+        <SafeAreaContainer>
             <Searchbar placeholder="Type Article title, news or share" onChangeText={onChangeSearch} value={searchQuery} />
 
             {isRejected && <Title>Cannot load data.</Title>}
@@ -71,7 +70,7 @@ const SearchScreen = () => {
                     />
                 </List>
             )}
-        </SafeAreaView>
+        </SafeAreaContainer>
     );
 };
 

@@ -9,6 +9,7 @@ const { width } = Dimensions.get("window");
 const Container = styled.View`
     flex: 1;
     padding: 20px 0;
+    border-radius: 20;
     margin-bottom: 20px;
 `;
 
@@ -49,41 +50,27 @@ const styles = {
 
     image: {
         width,
+        borderRadius: 10,
         flex: 1,
     },
 };
 
 export default function MyCarousel() {
-    const url = "https://www.thevisitx.com/wp-json/wp/v2/posts?per_page=4&orderby=date&order=desc&feature=true";
+    // const url = "https://www.thevisitx.com/wp-json/wp/v2/posts?per_page=4&orderby=date&order=desc&feature=true";
 
-    const { response, error, isLoading } = useFetch(url, {});
+    // const { response, error, isLoading } = useFetch(url, {});
 
     // console.error("asd", response);
     const data = [
         {
-            title: "Biyard",
+            title: "Dark Collection",
             subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
-            illustration: "https://imgur.com/47NrpDQ.jpg",
+            illustration: "https://wallpapercave.com/wp/wp3145662.jpg",
         },
         {
-            title: "Earlier this morning, NYC",
+            title: "Electric way",
             subtitle: "Lorem ipsum dolor sit amet",
-            illustration: "https://imgur.com/aEsf5Gj.jpg",
-        },
-        {
-            title: "White Pocket Sunset",
-            subtitle: "Lorem ipsum dolor sit amet et nuncat ",
-            illustration: "https://imgur.com/LDl9Aki.jpg",
-        },
-        {
-            title: "Acrocorinth, Greece",
-            subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
-            illustration: "https://imgur.com/tH30Ekv.jpg",
-        },
-        {
-            title: "The lone tree, majestic landscape of New Zealand",
-            subtitle: "Lorem ipsum dolor sit amet",
-            illustration: "https://imgur.com/whdyG3i.jpg",
+            illustration: "https://themepack.me/i/c/749x467/media/g/774/guitar-theme-ha17.jpg",
         },
     ];
     // const { title, content, excerpt, jetpack_featured_media_url, date, slug } = response;
@@ -145,7 +132,7 @@ export default function MyCarousel() {
                 )} */}
 
                 {data.map((item) => (
-                    <View style={styles.slide} title={<Text numberOfLines={1}>{item.title}</Text>}>
+                    <View style={{ borderRadius: 10 }} title={<Text numberOfLines={1}>{item.title}</Text>}>
                         <Image
                             source={{ uri: item.illustration }}
                             indicator={ProgressBar}
@@ -156,6 +143,7 @@ export default function MyCarousel() {
                                 unfilledColor: "rgba(200, 200, 200, 0.2)",
                             }}
                             style={{
+                                borderRadius: 10,
                                 width: width,
                                 height: 240,
                             }}

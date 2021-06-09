@@ -1,30 +1,36 @@
-import React from "react";
-import { View, Text, ScrollView, FlatList } from "react-native";
-import { Card, Title } from "react-native-paper";
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Button, Card, Title } from "react-native-paper";
 import styled from "styled-components";
 import Product from "../../components/Product";
 import { WIDTH } from "../../utils/screenSize";
+import axiosInstance from "../../utils/axios";
+import SafeAreaContainer from "../../components/SafeAreaContainer";
 
-import useFetch from "../../utils/hooks/useFetch";
-export default function ProductCategory() {
+export default function ProductCategory({ route, id }) {
     const numColumns = 2;
-    const url = "wp-json/wc/v3/products";
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [response, setResponse] = useState([]);
+    const url = `wp-json/wc/v3/products?category=${id ? id : route.params.id}&page=` + page;
+    const offset = 5;
 
-    const {
-        response,
-        error,
-        status: { isLoading, isRejected, isResolved },
-    } = useFetch(url);
+    useEffect(() => getData(), [page]);
 
-    if (isRejected) {
-        return <Text>Cannot load data...</Text>;
-    }
-    if (isLoading) {
-        return <Text>Loading...</Text>;
-    }
+    const getData = () => {
+        setLoading(true);
+        axiosInstance(url)
+            .then((res) => {
+                setResponse([...response, ...res.data]);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
+    // Add empty colum at the end of row
     const formatData = (data, numColumns) => {
-        // const dataList = data.filter((data) => data.type == "product"); // filtered product data
         const dataList = data;
         const totalRows = Math.floor(dataList?.length / numColumns);
         let totalLasttRow = dataList.length - totalRows * numColumns;
@@ -49,24 +55,53 @@ export default function ProductCategory() {
         }
         return <Product productHeight={WIDTH / numColumns} item={item} />;
     };
+    const loadMoreData = () => {
+        setPage((prev) => page + 1);
+    };
 
-    if (isResolved)
+    const renderFooter = () => (
+        <Button icon="more" mode="outlined" onPress={loadMoreData} loading={loading}>
+            Load More
+        </Button>
+    );
+
+    if (id) {
         return (
-            // <Container>
             <FlatList
                 data={formatData(response, numColumns)}
                 columnWrapperStyle={{ justifyContent: "space-between" }}
-                ListHeaderComponent={<MyCarousel />}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}
-                ListHeaderComponent={<Title>Featured</Title>}
+                // ListHeaderComponent={<Title>Featured</Title>}
                 numColumns={numColumns}
-                style={{ padding: 10 }}
+                style={{ paddingVertical: 10 }}
                 ListEmptyComponent={showEmptyListView}
+                ListFooterComponent={renderFooter}
+                // onEndReached={loadMoreData}
+                onEndReachedThreshold={0.1}
+                // ListFooterComponent={renderFooter}
             />
-            // </Container>
+        );
+    } else
+        return (
+            <Container>
+                <FlatList
+                    data={formatData(response, numColumns)}
+                    columnWrapperStyle={{ justifyContent: "space-between" }}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={renderItem}
+                    ListHeaderComponent={<Title>Featured</Title>}
+                    numColumns={numColumns}
+                    style={{ paddingHorizontal: 10 }}
+                    ListEmptyComponent={showEmptyListView}
+                    ListFooterComponent={renderFooter}
+                    // onEndReached={loadMoreData}
+                    onEndReachedThreshold={0.1}
+                    // ListFooterComponent={renderFooter}
+                />
+            </Container>
         );
 }
-const Container = styled.ScrollView`
+const Container = styled(SafeAreaContainer)`
     /* background-color: blue; */
 `;
