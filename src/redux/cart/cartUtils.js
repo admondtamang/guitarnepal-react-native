@@ -12,16 +12,17 @@ export const addItemTocart = (cartItems, cartItemToAdd) => {
         //     return [...cartItems, { ...cartItemToAdd }];
         // }
         // Increase product quantiy when add to cart.
-        cart = cartItems.map(
-            (item) =>
-                item.id === existingCartItem.id ? (existingCartItem.variation_id === cartItemToAdd.id ? { ...cartItemToAdd } : item) : item //return same item
+        // cart = cartItems.map(
+        //     (item) =>
+        //         item.id === existingCartItem.id ? (existingCartItem.variation_id === cartItemToAdd.id ? { ...cartItemToAdd } : item) : item //return same item
 
-            // item.id === existingCartItem.id ? (item.variation_id===cartItemToAdd ? { ...item,{...item,variation_id:variation_id}  } : item) : item
-        );
+        //     // item.id === existingCartItem.id ? (item.variation_id===cartItemToAdd ? { ...item,{...item,variation_id:variation_id}  } : item) : item
+        // );
 
-        if (existingCartItem.variation_id && existingCartItem.variation_id !== cartItemToAdd.variation_id) {
-            cart.push({ ...cartItemToAdd });
-        }
+        // if (existingCartItem.variation_id && existingCartItem.variation_id !== cartItemToAdd.variation_id) {
+        //     cart.push({ ...cartItemToAdd });
+        // }
+
         return cart;
     }
 

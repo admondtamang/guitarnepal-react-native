@@ -6,6 +6,7 @@ import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } fro
 import userSlice from "./user/userSlice";
 import logger from "redux-logger";
 import productSlice from "./product/productSlice";
+import cartSlice from "./cart/cartSlice";
 
 const persistConfig = {
     key: "guitarnepal",
@@ -14,6 +15,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
     user: userSlice,
+    cart: cartSlice,
     product: productSlice,
 });
 
