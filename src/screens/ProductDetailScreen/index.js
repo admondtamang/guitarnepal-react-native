@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
 import useFetch from "../../utils/hooks/useFetch";
-import { Subheading, Title } from "react-native-paper";
+import { Button, Headline, Subheading, Title } from "react-native-paper";
 import Loading from "../../components/Loading";
 import ImageSlider from "../../components/ImageSlider";
 import styled from "styled-components";
@@ -50,13 +50,14 @@ export default function ProductDetailScreen({ route }) {
                     <LottieFile animationData={animationData} message="No picture found" />
                 )}
                 <View style={{ padding: 10 }}>
-                    <Title>{name}</Title>
+                    <Title style={{ color: "black" }}>{name}</Title>
                     <Text>
                         Rs.{on_sale && <SalePrice>{regular_price} </SalePrice>}
                         {price}
                     </Text>
 
-                    <HTML source={{ html: description }} contentWidth={WIDTH} />
+                    <Subheading>Description</Subheading>
+                    <HTML containerStyle={{ marginTop: 0 }} source={{ html: description }} contentWidth={WIDTH} />
                 </View>
             </ScrollView>
         );

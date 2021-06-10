@@ -82,7 +82,7 @@ export default function MyCarousel() {
     return (
         <Container>
             <Swiper
-                height={240}
+                height={120}
                 onMomentumScrollEnd={(e, state, context) => console.log("index:", state.index)}
                 dot={
                     <View
@@ -145,7 +145,7 @@ export default function MyCarousel() {
                             style={{
                                 borderRadius: 10,
                                 width: width,
-                                height: 240,
+                                height: 120,
                             }}
                         />
                     </View>
