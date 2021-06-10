@@ -131,8 +131,8 @@ export default function MyCarousel() {
                     </>
                 )} */}
 
-                {data.map((item) => (
-                    <View style={{ borderRadius: 10 }} title={<Text numberOfLines={1}>{item.title}</Text>}>
+                {data.map((item, i) => (
+                    <View key={i} style={{ borderRadius: 10 }} title={<Text numberOfLines={1}>{item.title}</Text>}>
                         <Image
                             source={{ uri: item.illustration }}
                             indicator={ProgressBar}

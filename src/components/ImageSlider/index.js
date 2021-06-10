@@ -5,7 +5,7 @@ export default function ImageSlider({ images }) {
     return (
         <SliderBox
             images={images}
-            sliderBoxHeight={200}
+            sliderBoxHeight={400}
             dotColor="#FFEE58"
             inactiveDotColor="#90A4AE"
             paginationBoxVerticalPadding={20}
