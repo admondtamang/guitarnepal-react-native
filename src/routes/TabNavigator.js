@@ -6,15 +6,18 @@ import { MaterialIcons } from "@expo/vector-icons";
 import SearchScreen from "../screens/SearchScreen";
 import CategoriesList from "../screens/CategoriesList";
 import Cart from "../screens/Cart";
+import colors from "../utils/colors";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+    const cartItems = useSelector((state) => state.cart.cartItems);
     return (
         <Tab.Navigator
             initialRouteName="Home"
             tabBarOptions={{
-                activeTintColor: "#000",
+                activeTintColor: colors.secondary,
             }}
         >
             <Tab.Screen
@@ -45,18 +48,12 @@ const TabNavigator = () => {
                 name="Cart"
                 component={Cart}
                 options={{
+                    title: "Cart",
+                    tabBarBadge: cartItems.length,
                     tabBarLabel: "Cart",
-                    tabBarIcon: ({ color, size }) => <MaterialIcons name="category" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <MaterialIcons name="bucket" size={size} color={color} />,
                 }}
             />
-            {/* <Tab.Screen
-                name="User"
-                component={User}
-                options={{
-                    tabBarLabel: "User",
-                    tabBarIcon: ({ color, size }) => <MaterialIcons name="supervised-user-circle" color={color} size={size} />,
-                }}
-            /> */}
         </Tab.Navigator>
     );
 };

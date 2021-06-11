@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import axiosInstance from "../axios";
 
-const useFetchQuery = (url, options) => {
-    const { isLoading, error, data, status } = useQuery("repoData", () => axiosInstance.get(url, { ...options }).then((res) => res.data));
+const useFetchQuery = (queryName, url, options) => {
+    const { isLoading, error, data, status } = useQuery(queryName, () => axiosInstance.get(url, { ...options }).then((res) => res.data));
 
     useEffect(() => {}, [url]);
 

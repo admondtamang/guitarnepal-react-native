@@ -1,10 +1,10 @@
 export const addItemTocart = (cartItems, cartItemToAdd) => {
     let cart;
     // if cart is empty
-    if (cartItemToAdd.id === null) {
+    if (cartItemToAdd.product_id === null) {
         return cartItems;
     }
-    const existingCartItem = cartItems.find((cartItems) => cartItems.id === cartItemToAdd.id);
+    const existingCartItem = cartItems.find((cartItems) => cartItems.product_id === cartItemToAdd.product_id);
 
     if (existingCartItem) {
         // If it came from productDetail
@@ -35,20 +35,20 @@ export const addItemTocart = (cartItems, cartItemToAdd) => {
 };
 
 export const increaseCartItem = (cartItems, cartItemToIncrese) => {
-    const existingCartItem = cartItems.find((cartItems) => cartItems.id === cartItemToIncrese.id);
+    const existingCartItem = cartItems.find((cartItems) => cartItems.product_id === cartItemToIncrese.product_id);
     if (existingCartItem) {
         // decrease for varitation product
-        if (cartItemToIncrese.variation_id) {
+        if (cartItemToIncrese.variation_id !== 0) {
             return cartItems.map((item) =>
                 item.variation_id === cartItemToIncrese.variation_id ? { ...item, quantity: item.quantity + 1 } : item
             );
         }
         // for no varation product
-        return cartItems.map((item) => (item.id === existingCartItem.id ? { ...item, quantity: item.quantity + 1 } : item));
+        return cartItems.map((item) => (item.product_id === existingCartItem.product_id ? { ...item, quantity: item.quantity + 1 } : item));
     }
 };
 export const decreaseCartItem = (cartItems, cartItemToDecrease) => {
-    const existingCartItem = cartItems.find((cartItems) => cartItems.id === cartItemToDecrease.id);
+    const existingCartItem = cartItems.find((cartItems) => cartItems.product_id === cartItemToDecrease.product_id);
     if (existingCartItem) {
         // donot remove quantity if quantity is one
         if (existingCartItem.quantity <= 1) {
@@ -61,15 +61,15 @@ export const decreaseCartItem = (cartItems, cartItemToDecrease) => {
             );
         }
         // for no varation product
-        return cartItems.map((item) => (item.id === existingCartItem.id ? { ...item, quantity: item.quantity - 1 } : item));
+        return cartItems.map((item) => (item.product_id === existingCartItem.product_id ? { ...item, quantity: item.quantity - 1 } : item));
     }
 };
 
 export const removeItemfromCart = (cartItems, cartItemsToRemove) => {
     // remove for varitation product
-    if (cartItemsToRemove.variation_id) {
+    if (cartItemsToRemove.variation_id !== 0) {
         return cartItems.filter((cartItem) => cartItem.variation_id !== cartItemsToRemove.variation_id);
-    } else return cartItems.filter((cartItem) => cartItem.id !== cartItemsToRemove.id);
+    } else return cartItems.filter((cartItem) => cartItem.product_id !== cartItemsToRemove.product_id);
 
     // console.log("remove", cartItemsToRemove);
     // cartItems.reduce((ack, item) => {

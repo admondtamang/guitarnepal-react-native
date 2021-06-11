@@ -1,11 +1,17 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
-import { List, Title } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
+import LottieFile from "../../components/LottieFile";
 import CartItem from "./CartItem";
+import animated from "../../../assets/lottie/42176-empty-cart.json";
 
 export default function Cart() {
     const cartItems = useSelector((state) => state.cart.cartItems);
+
+    if (cartItems.length === 0) {
+        return <LottieFile animationData={animated} loop={false} />;
+    }
     return (
         <ScrollView style={{ padding: 10 }}>
             {cartItems.map((item, index) => (

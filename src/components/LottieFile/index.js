@@ -3,14 +3,14 @@ import styled from "styled-components";
 import React from "react";
 import { View } from "react-native";
 
-export default function LottieFile({ animationData, width, height, message }) {
+export default function LottieFile({ animationData, width, height, message, loop }) {
     return (
         <Container>
             <View style={{ height: 200 }}>
                 <AnimatedLottieView
                     source={animationData ? animationData : require("../../../assets/lottie/4888-dog-icon.json")}
                     autoPlay
-                    loop
+                    loop={loop ? true : false}
                 />
             </View>
             {message && <Message>{message}</Message>}

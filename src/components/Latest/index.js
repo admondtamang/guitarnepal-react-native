@@ -9,19 +9,23 @@ import { WIDTH } from "../../utils/screenSize";
 import useFetch from "../../utils/hooks/useFetch";
 import Loading from "../Loading";
 import ImageSlider from "../ImageSlider";
+import useFetchQuery from "../../utils/hooks/useFetchQuery";
 export default function TopTabBarContent() {
     const numColumns = 2;
     const url = "wp-json/wc/v3/products?featured=true";
 
-    const {
-        response,
-        error,
-        status: { isLoading, isRejected, isResolved },
-    } = useFetch(url);
+    // const {
+    //     response,
+    //     error,
+    //     status: { isLoading, isRejected, isResolved },
+    // } = useFetch(url);
 
-    if (isRejected) {
-        return <Text>Cannot load data...</Text>;
+    const { response, error, isLoading, status } = useFetchQuery("latest", url);
+
+    if (error) {
+        return <Text>Error , {error.message}</Text>;
     }
+
     if (isLoading) {
         return <Loading />;
     }
@@ -54,7 +58,7 @@ export default function TopTabBarContent() {
     };
     const images = ["https://wallpapercave.com/wp/wp3145662.jpg", "https://themepack.me/i/c/749x467/media/g/774/guitar-theme-ha17.jpg"];
 
-    if (isResolved)
+    if (status === "success")
         return (
             // <Container>
             <FlatList

@@ -25,7 +25,7 @@ export default function ProductDetailScreen({ route }) {
         dispatch(fetchProduct(slug));
     }, []);
 
-    const { response, error, isLoading, status } = useFetchQuery(url);
+    const { response, error, isLoading, status } = useFetchQuery("productDetail", url);
 
     if (error) {
         return <Text>Error , {error.message}</Text>;
