@@ -5,6 +5,7 @@ import Home from "../screens/Home";
 import { MaterialIcons } from "@expo/vector-icons";
 import SearchScreen from "../screens/SearchScreen";
 import CategoriesList from "../screens/CategoriesList";
+import Cart from "../screens/Cart";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +38,14 @@ const TabNavigator = () => {
                 component={CategoriesList}
                 options={{
                     tabBarLabel: "Categories",
+                    tabBarIcon: ({ color, size }) => <MaterialIcons name="category" size={size} color={color} />,
+                }}
+            />
+            <Tab.Screen
+                name="Cart"
+                component={Cart}
+                options={{
+                    tabBarLabel: "Cart",
                     tabBarIcon: ({ color, size }) => <MaterialIcons name="category" size={size} color={color} />,
                 }}
             />

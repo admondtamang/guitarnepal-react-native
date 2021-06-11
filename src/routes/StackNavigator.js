@@ -49,7 +49,6 @@ export default function StackNavigator() {
             <Stack.Screen name="Categories" component={CategoriesList} options={{ headerShown: false }} />
             <Stack.Screen name="ProductCategory" component={ProductCategory} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen name="CartScreen" component={Cart} />
             <Stack.Screen
                 name="ProductDetail"
                 component={ProductDetailScreen}
@@ -57,6 +56,7 @@ export default function StackNavigator() {
                     headerRight: () => <ShoppingCartIcon />,
                 }}
             />
+            <Stack.Screen name="CartScreen" component={Cart} />
         </Stack.Navigator>
     );
 }

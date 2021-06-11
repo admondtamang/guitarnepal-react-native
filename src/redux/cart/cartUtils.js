@@ -23,7 +23,7 @@ export const addItemTocart = (cartItems, cartItemToAdd) => {
         //     cart.push({ ...cartItemToAdd });
         // }
 
-        return cart;
+        return cartItems;
     }
 
     // For the first time added to cart

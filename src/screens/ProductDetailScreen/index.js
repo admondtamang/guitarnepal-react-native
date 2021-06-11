@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import useFetchQuery from "../../utils/hooks/useFetchQuery";
-import { Button, Headline, Subheading, Title } from "react-native-paper";
+import { Subheading, Title } from "react-native-paper";
 import Loading from "../../components/Loading";
 import ImageSlider from "../../components/ImageSlider";
 import styled from "styled-components";
@@ -13,6 +13,7 @@ import LottieFile from "../../components/LottieFile";
 import animationData from "../../../assets/lottie/no-picture.json";
 import { ADD_TO_CART } from "../../redux/cart/cartSlice";
 
+import { Button, Text } from "native-base";
 export default function ProductDetailScreen({ route }) {
     const slug = route.params.slug;
     let url = "/wp-json/wc/v3/products?slug=" + slug;
@@ -42,30 +43,33 @@ export default function ProductDetailScreen({ route }) {
         }
 
         return (
-            <ScrollView>
-                {pictures.length > 0 ? (
-                    <ImageSlider images={pictures} />
-                ) : (
-                    <LottieFile animationData={animationData} message="No picture found" />
-                )}
-                <View style={{ padding: 10 }}>
-                    <Title style={{ color: "black" }}>{name}</Title>
-                    <Text>
-                        Rs.{on_sale && <SalePrice>{regular_price} </SalePrice>}
-                        {price}
-                    </Text>
+            <>
+                <ScrollView>
+                    {pictures.length > 0 ? (
+                        <ImageSlider images={pictures} />
+                    ) : (
+                        <LottieFile animationData={animationData} message="No picture found" />
+                    )}
+                    <View style={{ padding: 10 }}>
+                        <Title style={{ color: "black" }}>{name}</Title>
+                        <Text>
+                            Rs.{on_sale && <SalePrice>{regular_price} </SalePrice>}
+                            {price}
+                        </Text>
 
-                    <Subheading>Description</Subheading>
-                    <HTML containerStyle={{ marginTop: 0 }} source={{ html: description }} contentWidth={WIDTH} />
-
-                    <BottomContainer>
-                        <Button mode="contain">Buy Now</Button>
-                        <Button mode="contained" onPress={handleAddToCart}>
-                            Add To Cart
-                        </Button>
-                    </BottomContainer>
-                </View>
-            </ScrollView>
+                        <Subheading>Description</Subheading>
+                        <HTML containerStyle={{ marginTop: 0 }} source={{ html: description }} contentWidth={WIDTH} />
+                    </View>
+                </ScrollView>
+                <BottomContainer>
+                    <Button rounded light>
+                        <Text>Buy Now</Text>
+                    </Button>
+                    <Button rounded onPress={handleAddToCart}>
+                        <Text>Add To Cart</Text>
+                    </Button>
+                </BottomContainer>
+            </>
         );
     }
 }
@@ -73,6 +77,10 @@ const BottomContainer = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 10px;
+    border-top-left-radius: 10;
+    border-top-right-radius: 10;
+    background-color: grey;
 `;
 const SalePrice = styled.Text`
     color: red;
