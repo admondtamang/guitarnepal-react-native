@@ -16,6 +16,9 @@ import { Badge } from "react-native-paper";
 import { Text } from "react-native";
 import ShoppingCartIcon from "../components/ShoppingCartIcon";
 import Cart from "../screens/Cart";
+import BillingScreen from "../screens/Billing";
+import LoginScreen from "../screens/Login";
+import SignupScreen from "../screens/Signup";
 export default function StackNavigator() {
     const Stack = createStackNavigator();
     const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -45,6 +48,8 @@ export default function StackNavigator() {
     // } else
     return (
         <Stack.Navigator>
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Categories" component={CategoriesList} options={{ headerShown: false }} />
             <Stack.Screen name="ProductCategory" component={ProductCategory} options={{ headerShown: false }} />
@@ -56,7 +61,8 @@ export default function StackNavigator() {
                     headerRight: () => <ShoppingCartIcon />,
                 }}
             />
-            <Stack.Screen name="CartScreen" component={Cart} />
+            <Stack.Screen name="CartScreen" component={Cart} options={{ headerShown: false }} />
+            <Stack.Screen name="BillingScreen" component={BillingScreen} />
         </Stack.Navigator>
     );
 }

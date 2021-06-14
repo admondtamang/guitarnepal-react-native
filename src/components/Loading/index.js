@@ -1,8 +1,7 @@
 import React from "react";
 
-import { Container, Header, Content, Spinner } from "native-base";
 import LottieFile from "../LottieFile";
-import LoadingLottie from "../../../assets/lottie/loading.json";
+import LoadingLottie from "../../../assets/lottie/49031-guitar-music.json";
 import { Surface } from "react-native-paper";
 export default function Loading() {
     return (

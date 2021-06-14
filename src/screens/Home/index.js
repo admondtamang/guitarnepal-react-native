@@ -12,19 +12,22 @@ export default function Home() {
     const navigation = useNavigation();
     const { colors } = useTheme();
 
-    const onPress = () => {
+    const handleSearch = () => {
         navigation.navigate("Search");
+    };
+    const handleLogin = () => {
+        navigation.navigate("Login");
     };
 
     return (
         <SafeAreaContainer style={{ backgroundColor: colors.background }}>
             {/* header */}
             <Header>
-                <TouchableOpacity onPress={onPress}>
-                    <Feather name="search" size={24} color="black" onPress={onPress} />
+                <TouchableOpacity onPress={handleSearch}>
+                    <Feather name="search" size={24} color="black" onPress={handleSearch} />
                 </TouchableOpacity>
                 <Title style={{ fontWeight: "bold" }}>GuitarNepal</Title>
-                <TouchableOpacity onPress={onPress}>
+                <TouchableOpacity onPress={handleLogin}>
                     <AntDesign name="user" size={24} color="black" />
                 </TouchableOpacity>
             </Header>

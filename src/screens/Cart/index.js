@@ -10,7 +10,11 @@ export default function Cart() {
     const cartItems = useSelector((state) => state.cart.cartItems);
 
     if (cartItems.length === 0) {
-        return <LottieFile animationData={animated} loop={false} />;
+        return (
+            <SafeAreaView>
+                <LottieFile animationData={animated} loop={false} />
+            </SafeAreaView>
+        );
     }
     return (
         <ScrollView style={{ padding: 10 }}>

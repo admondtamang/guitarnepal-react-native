@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { Card, Title } from "react-native-paper";
 import styled from "styled-components";
-import MyCarousel from "../../components/Carousel";
-import Product from "../Product";
-import { WIDTH } from "../../utils/screenSize";
+import MyCarousel from "../../../components/Carousel";
+import Product from "../../../components/Product";
+import { WIDTH } from "../../../utils/screenSize";
 
-import useFetch from "../../utils/hooks/useFetch";
-import Loading from "../Loading";
-import ImageSlider from "../ImageSlider";
-import useFetchQuery from "../../utils/hooks/useFetchQuery";
+import useFetch from "../../../utils/hooks/useFetch";
+import Loading from "../../../components/Loading";
+import ImageSlider from "../../../components/ImageSlider";
+import useFetchQuery from "../../../utils/hooks/useFetchQuery";
 export default function TopTabBarContent() {
     const numColumns = 2;
     const url = "wp-json/wc/v3/products?featured=true";

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import colors from "../utils/colors";
-import Latest from "../components/Latest";
 import Brand from "../screens/Home/Brands";
+import Latest from "../screens/Home/Latest";
 import Traditional from "../screens/Home/Traditional";
 const Tab = createMaterialTopTabNavigator();
 
