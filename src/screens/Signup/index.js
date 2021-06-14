@@ -5,13 +5,13 @@ import axios from "axios";
 import StyledInput from "../../components/StyledInput";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { user_signUp } from "../../api/user";
 
 const SignupScreen = ({ navigation }) => {
     const SignupSchema = Yup.object().shape({
-        userName: Yup.string().required(),
+        username: Yup.string().required(),
         email: Yup.string().email().required(),
         password: Yup.string().required().min(2, "Seems a bit short...").max(10, "We prefer insecure system, try a shorter password."),
-        phone: Yup.string().required().max(10).min(4),
         confirmPassword: Yup.string()
             .required()
             .label("Confirm password")
@@ -22,19 +22,8 @@ const SignupScreen = ({ navigation }) => {
 
     const onSubmit = async (values, actions) => {
         try {
-            const reqBody = {
-                query: `
-        mutation{
-            createUser(userInput:{userName:"${values.userName}"email:"${values.email}" password:"${values.password}",location:"${values.location}",phone:"${values.phone}"}){
-            _id
-            email
-            password
-          }
-        }
-      `,
-            };
-
-            await axios.post("http://localhost:3000/graphql", reqBody);
+            console.log(values);
+            await user_signUp(values);
             actions.setSubmitting(false);
             // ToastAndroid.show("A pikachu appeared nearby !", ToastAndroid.SHORT);
             navigation.navigate("Login");
@@ -56,16 +45,15 @@ const SignupScreen = ({ navigation }) => {
                 <Text style={styles.title}>SignUp</Text>
                 <Text style={styles.text}>Enter valid Email and Password</Text>
                 <Formik
-                    initialValues={{ email: "", password: "", phone: "", location: "" }}
+                    initialValues={{ email: "ad@gf.com", password: "1", username: "a2" }}
                     validationSchema={SignupSchema}
                     onSubmit={onSubmit}
                 >
                     {(formikProps) => (
                         <>
-                            <StyledInput label="User Name" formikProps={formikProps} formikKey="userName" placeholder="User Name" />
+                            <StyledInput label="User Name" formikProps={formikProps} formikKey="username" placeholder="User Name" />
                             <StyledInput label="Email" formikProps={formikProps} formikKey="email" placeholder="Email" />
 
-                            <StyledInput label="Phone" formikProps={formikProps} formikKey="phone" placeholder="Phone" />
                             <StyledInput
                                 label="password"
                                 formikProps={formikProps}
