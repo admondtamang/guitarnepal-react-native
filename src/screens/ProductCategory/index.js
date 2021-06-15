@@ -60,7 +60,7 @@ export default function ProductCategory({ route, id }) {
     };
 
     const renderFooter = () => (
-        <Button icon="more" mode="outlined" onPress={loadMoreData} loading={loading}>
+        <Button style={{ marginBottom: 20 }} icon="more" mode="text" onPress={loadMoreData} loading={loading}>
             Load More
         </Button>
     );
@@ -68,6 +68,8 @@ export default function ProductCategory({ route, id }) {
     if (id) {
         return (
             <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 data={formatData(response, numColumns)}
                 columnWrapperStyle={{ justifyContent: "space-between" }}
                 keyExtractor={(item, index) => index.toString()}

@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import User from "../screens/User";
 import Home from "../screens/Home";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import SearchScreen from "../screens/SearchScreen";
 import CategoriesList from "../screens/CategoriesList";
 import Cart from "../screens/Cart";
@@ -25,7 +25,7 @@ const TabNavigator = () => {
                 component={Home}
                 options={{
                     tabBarLabel: "Home",
-                    tabBarIcon: ({ color, size }) => <MaterialIcons name="home" color={color} size={size} />,
+                    tabBarIcon: ({ color, size }) => <AntDesign name="home" color={color} size={size} />,
                 }}
             />
             <Tab.Screen
@@ -33,7 +33,7 @@ const TabNavigator = () => {
                 component={SearchScreen}
                 options={{
                     tabBarLabel: "Search",
-                    tabBarIcon: ({ color, size }) => <MaterialIcons name="search" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <AntDesign name="search1" size={size} color={color} />,
                 }}
             />
             <Tab.Screen
@@ -41,7 +41,7 @@ const TabNavigator = () => {
                 component={CategoriesList}
                 options={{
                     tabBarLabel: "Categories",
-                    tabBarIcon: ({ color, size }) => <MaterialIcons name="category" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <AntDesign name="isv" size={size} color={color} />,
                 }}
             />
             <Tab.Screen
@@ -51,7 +51,7 @@ const TabNavigator = () => {
                     title: "Cart",
                     tabBarBadge: cartItems.length,
                     tabBarLabel: "Cart",
-                    tabBarIcon: ({ color, size }) => <MaterialIcons name="bucket" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <AntDesign name="shoppingcart" size={size} color={color} />,
                 }}
             />
         </Tab.Navigator>

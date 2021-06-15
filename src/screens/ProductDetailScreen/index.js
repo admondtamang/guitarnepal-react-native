@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import useFetchQuery from "../../utils/hooks/useFetchQuery";
 import { Subheading, Title } from "react-native-paper";
@@ -12,12 +12,13 @@ import HTML from "react-native-render-html";
 import LottieFile from "../../components/LottieFile";
 import animationData from "../../../assets/lottie/no-picture.json";
 import { ADD_TO_CART } from "../../redux/cart/cartSlice";
-
+import ImageView from "react-native-image-view";
 import { Button, Text } from "native-base";
 export default function ProductDetailScreen({ route }) {
     const slug = route.params.slug;
     let url = "/wp-json/wc/v3/products?slug=" + slug;
     const dispatch = useDispatch();
+    const [IsOpen, setIsOpen] = useState(false);
     // const product = useSelector((state) => state.product);
 
     // console.log(product);
@@ -33,7 +34,16 @@ export default function ProductDetailScreen({ route }) {
     if (isLoading) {
         return <Loading />;
     }
-
+    const images2 = [
+        {
+            source: {
+                uri: "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg",
+            },
+            title: "Paris",
+            width: 806,
+            height: 720,
+        },
+    ];
     if (status === "success") {
         const { id, price, variations, name, on_sale, description, regular_price, images } = response[0];
         const pictures = images?.map((img) => img.src);
@@ -46,7 +56,19 @@ export default function ProductDetailScreen({ route }) {
             <>
                 <ScrollView>
                     {pictures.length > 0 ? (
-                        <ImageSlider images={pictures} />
+                        <>
+                            <ImageView
+                                images={images2}
+                                imageIndex={0}
+                                isVisible={IsOpen}
+                                renderFooter={(currentImage) => (
+                                    <View>
+                                        <Text>My footer</Text>
+                                    </View>
+                                )}
+                            />
+                            <ImageSlider images={pictures} onPress={() => setIsOpen(!IsOpen)} />
+                        </>
                     ) : (
                         <LottieFile animationData={animationData} message="No picture found" />
                     )}

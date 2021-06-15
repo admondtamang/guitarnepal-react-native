@@ -19,6 +19,7 @@ import Cart from "../screens/Cart";
 import BillingScreen from "../screens/Billing";
 import LoginScreen from "../screens/Login";
 import SignupScreen from "../screens/Signup";
+import CheckOutScreen from "../screens/CheckOut";
 export default function StackNavigator() {
     const Stack = createStackNavigator();
     const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -48,12 +49,13 @@ export default function StackNavigator() {
     // } else
     return (
         <Stack.Navigator>
+            <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Categories" component={CategoriesList} options={{ headerShown: false }} />
             <Stack.Screen name="ProductCategory" component={ProductCategory} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="Checkout" component={CheckOutScreen} options={{ headerShown: false }} />
             <Stack.Screen
                 name="ProductDetail"
                 component={ProductDetailScreen}

@@ -18,7 +18,7 @@ export default function Product({ item }) {
 
     if (regular_price) {
         discount = ((regular_price - price) / regular_price) * 100;
-        discount = discount.toFixed(2);
+        discount = discount.toFixed(0);
     }
     // image validation choosing 1st image
     const image = images.length <= 0 ? "https://facebook.github.io/react/img/logo_small.png" : images[0].src;
@@ -36,7 +36,7 @@ export default function Product({ item }) {
                 {price}
             </Price>
 
-            {discount != 0 && <StyledBadge>{discount}</StyledBadge>}
+            {discount != 0 && <StyledBadge>-{discount}%</StyledBadge>}
         </Container>
     );
 }

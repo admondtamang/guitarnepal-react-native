@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image, useWindowDimensions } from "react-native";
 import Constants from "expo-constants"; //So we can read app.json extra
-import * as GoogleSignIn from "expo-google-sign-in";
 
-import * as Facebook from "expo-facebook";
-import * as Google from "expo-google-app-auth";
-import firebase from "firebase"; //basic firebase
 // import firebase from "../../helpers/firebase"; //This is the initialized Firebase, you can find it in my GitHub
 import { Avatar, Caption, Title, Button, Switch } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -14,7 +10,8 @@ import SignScreen from "./SignScreen";
 import { login, logout, switchDarkMode } from "../../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
-import { contentWidth } from "../../utils/width";
+import LoginScreen from "../Login";
+
 const Container = styled.SafeAreaView`
     padding: 20px;
 `;
@@ -26,86 +23,6 @@ export default function User() {
     const darkMode = useSelector((state) => state.user.darkMode);
     const contentWidth = useWindowDimensions().width;
 
-    const facebookAppId = "899946727075631";
-    const androidAppId = "150398907444-6edkhdrbnutdivi2k6k49otbsdqf7n8h.apps.googleusercontent.com";
-    useEffect(() => {}, [dispatch]);
-
-    // async function signInWithGoogle() {
-    //     setIsLoading(true);
-    //     try {
-    //         const result = await Google.logInAsync({
-    //             androidClientId: androidAppId,
-    //             iosClientId: "ios" + androidAppId,
-    //             behavior: "web",
-    //             scopes: ["profile", "email"],
-    //             permissions: ["public_profile", "email", "gender", "location"],
-    //         });
-
-    //         if (result.type === "success") {
-    //             // setUser(result.user);
-    //             console.log(result.user);
-
-    //             dispatch(login(result.user));
-    //             setIsLoading(false);
-    //         } else {
-    //             return { cancelled: true };
-    //         }
-    //     } catch ({ message }) {
-    //         alert("login: Error:" + message);
-    //     }
-    //     setIsLoading(false);
-    // }
-
-    useEffect(() => {
-        initAsync();
-    }, []);
-
-    const initAsync = async () => {
-        await GoogleSignIn.initAsync({
-            // You may ommit the clientId when the firebase `googleServicesFile` is configured
-            clientId: androidAppId,
-        });
-        _syncUserWithStateAsync();
-    };
-
-    const _syncUserWithStateAsync = async () => {
-        const user = await GoogleSignIn.signInSilentlyAsync();
-        setUser(user);
-    };
-
-    const signInWithGoogle = async () => {
-        try {
-            await GoogleSignIn.askForPlayServicesAsync();
-            const { type, user } = await GoogleSignIn.signInAsync();
-            if (type === "success") {
-                _syncUserWithStateAsync();
-            }
-        } catch ({ message }) {
-            alert("login: Error:" + message);
-        }
-    };
-
-    //  For future use
-    async function signInWithFacebook() {
-        try {
-            await Facebook.initializeAsync({
-                appId: facebookAppId,
-            });
-            const { type, token, expirationDate, permissions, declinedPermissions } = await Facebook.logInWithReadPermissionsAsync({
-                permissions: ["public_profile"],
-            });
-            if (type === "success") {
-                // Get the user's name using Facebook's Graph API
-                const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-                Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
-            } else {
-                // type === 'cancel'
-            }
-        } catch ({ message }) {
-            alert(`Facebook Login Error: ${message}`);
-        }
-    }
-
     if (isLoading) {
         return <Loading />;
     }
@@ -115,29 +32,7 @@ export default function User() {
             flex: 1;
             justify-content: flex-end;
         `;
-        return (
-            <Container>
-                <SignScreen signInWithGoogle={signInWithGoogle} />
-
-                <Row>
-                    <Text>{darkMode ? "Night Mode " : "Day Mode"}</Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={darkMode ? "#f5dd4b" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={() => dispatch(switchDarkMode())}
-                        value={darkMode}
-                    />
-                </Row>
-                <Title>Let's sign you in</Title>
-                <Text>We'll love to share information with you. </Text>
-                <Image source={require("../../assets/login.png")} style={{ margin: 20, width: "80%" }} />
-                <Button icon="google" style={{ backgroundColor: "green" }} mode="contained" onPress={() => signInWithGoogle()}>
-                    Google Signin
-                </Button>
-                {/* <Button title="Login with Google" onPress={signInWithGoogle} /> */}
-            </Container>
-        );
+        return <LoginScreen />;
     } else {
         const { familyName, givenName, id, name, photoUrl, email, location } = user;
 

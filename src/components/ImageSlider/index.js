@@ -1,7 +1,7 @@
 import React from "react";
 import { SliderBox } from "react-native-image-slider-box";
 
-export default function ImageSlider({ images }) {
+export default function ImageSlider({ images, onPress }) {
     return (
         <SliderBox
             images={images}
@@ -14,6 +14,7 @@ export default function ImageSlider({ images }) {
             ImageComponentStyle={{ borderRadius: 15, width: "97%", marginTop: 5 }}
             resizeMethod={"resize"}
             resizeMode={"cover"}
+            onPress={onPress}
         />
     );
 }
