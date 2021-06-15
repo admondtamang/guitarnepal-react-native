@@ -9,7 +9,7 @@ import { Formik } from "formik";
 import styled from "styled-components";
 import { selectCartTotal } from "../../redux/cart/cartSelector";
 
-export default function CheckOutScreen() {
+export default function CheckOutScreen({ navigation }) {
     const [checked, setChecked] = useState(false);
     const SignupSchema = Yup.object().shape({
         username: Yup.string().required(),
@@ -33,13 +33,13 @@ export default function CheckOutScreen() {
                 <Title>Total : {selectCartTotal}</Title>
 
                 <Formik
-                    initialValues={{ email: "ad@gf.com", password: "1", username: "a2" }}
+                    initialValues={{ email: "ad@gf.com", phone: "1", address1: "a2" }}
                     validationSchema={SignupSchema}
                     onSubmit={onSubmit}
                 >
                     {(formikProps) => (
                         <>
-                            <StyledInput label="Address1" formikProps={formikProps} formikKey="address" placeholder="Address" />
+                            <StyledInput label="Address1" formikProps={formikProps} formikKey="address1" placeholder="Address" />
                             <StyledInput label="City" formikProps={formikProps} formikKey="city" placeholder="City" />
                             <StyledInput label="Email" formikProps={formikProps} formikKey="email" placeholder="Email" />
                             <StyledInput label="Phone" formikProps={formikProps} formikKey="phone" placeholder="Phone" />

@@ -1,26 +1,61 @@
-import { createSlice } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import jwt_decode from "jwt-decode";
+import { user_login } from "../../api/user";
+
+// const initialUser = AsyncStorage.getItem("user") ? JSON.parse(AsyncStorage.getItem("user")) : null;
+
+export const fetchUser = createAsyncThunk("user/fetchUser", async ({ username, password }, { rejectWithValue }) => {
+    try {
+        console.log(username, password);
+
+        const req = await user_login({ username, password });
+        const user = jwt_decode(req.token);
+        return { ...req, user };
+    } catch (err) {
+        if (!err.response) {
+            throw err;
+        }
+        console.log(err);
+        return rejectWithValue(err.response.data);
+    }
+});
 
 const user = createSlice({
     name: "user",
     initialState: {
-        user: {},
+        data: null,
+        // user: initialUser,
+        status: null,
     },
+
     reducers: {
-        addUser: (state, action) => {
+        login: (state, action) => {
             return {
                 ...state,
-                user: action.payload,
+                data: action.payload,
             };
         },
-        removeUser: (state, action) => {
+        logout: (state) => {
             return {
                 ...state,
-                user: {},
+                data: null,
             };
+        },
+    },
+    extraReducers: {
+        [fetchUser.pending]: (state, action) => {
+            state.status = "loading";
+        },
+        [fetchUser.fulfilled]: (state, { payload }) => {
+            state.status = "success";
+            state.data = payload;
+        },
+        [fetchUser.rejected]: (state, { payload }) => {
+            state.status = "failed";
         },
     },
 });
 
-export const { addUser, removeUser } = user.actions;
-// export const { ADD_TO_CART, REMOVE_FROM_CART } = user.actions;
+export const { login, logout } = user.actions;
 export default user.reducer;

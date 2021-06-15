@@ -2,30 +2,22 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Formik } from "formik";
-import axios from "axios";
 import { Button, HelperText, ActivityIndicator } from "react-native-paper";
 import * as Yup from "yup";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { user_login } from "../../api/user";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../../redux/user/userSlice";
+import LoggedInUserScreen from "./LoggedInUserScreen";
 
 export default function LoginScreen({ navigation }) {
     const [borderColor, setBorderColor] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-        const getToken = async () => {
-            try {
-                const value = await AsyncStorage.getItem("token");
-                if (value !== null) {
-                    navigation.navigate("TabNavigator");
-                    console.log("token is here", value);
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        getToken();
-    }, []);
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.data);
+    console.log(user);
+    if (user && Object.keys(user).length !== 0) {
+        return <LoggedInUserScreen />;
+    }
 
     const onFocusInput = (value) => {
         setBorderColor(value);
@@ -34,12 +26,9 @@ export default function LoginScreen({ navigation }) {
     const onSubmit = async (values, actions) => {
         try {
             console.log(values);
-
-            const token = await user_login(values);
-            console.log(token);
+            dispatch(fetchUser({ username: values.username, password: values.password }));
 
             setIsLoggedIn(!isLoggedIn);
-            await AsyncStorage.setItem("token", token);
         } catch (e) {
             actions.setFieldError("general", e.message);
             console.log(e);
@@ -53,7 +42,7 @@ export default function LoginScreen({ navigation }) {
         password: Yup.string().required(),
     });
 
-    if (isLoggedIn) navigation.navigate("TabNavigator");
+    // if (isLoggedIn) navigation.navigate("TabNavigator");
 
     return (
         <View style={styles.container}>
