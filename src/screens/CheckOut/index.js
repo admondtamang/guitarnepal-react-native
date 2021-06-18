@@ -8,8 +8,13 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import styled from "styled-components";
 import { selectCartTotal } from "../../redux/cart/cartSelector";
+import { useDispatch } from "react-redux";
+import { EMPTY_CART } from "../../redux/cart/cartSlice";
+import axiosInstance from "../../utils/axios";
+import { ORDERS } from "../../utils/constants";
 
 export default function CheckOutScreen({ navigation }) {
+    const dispatch = useDispatch();
     const [checked, setChecked] = useState(false);
     const SignupSchema = Yup.object().shape({
         username: Yup.string().required(),
@@ -19,6 +24,8 @@ export default function CheckOutScreen({ navigation }) {
         try {
             console.log(values);
             actions.setSubmitting(false);
+            // axiosInstance.post(ORDERS, values);
+            // dispatch(EMPTY_CART());
             // ToastAndroid.show("A pikachu appeared nearby !", ToastAndroid.SHORT);
             navigation.navigate("Login");
         } catch (error) {

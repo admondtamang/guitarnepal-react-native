@@ -14,6 +14,7 @@ import animationData from "../../../assets/lottie/no-picture.json";
 import { ADD_TO_CART } from "../../redux/cart/cartSlice";
 import ImageView from "react-native-image-view";
 import { Button, Text } from "native-base";
+import SwiperComponent from "../../components/SwiperComponent";
 export default function ProductDetailScreen({ route }) {
     const slug = route.params.slug;
     let url = "/wp-json/wc/v3/products?slug=" + slug;
@@ -56,7 +57,7 @@ export default function ProductDetailScreen({ route }) {
             <>
                 <ScrollView>
                     {pictures.length > 0 ? (
-                        <>
+                        <PictureContainer>
                             <ImageView
                                 images={images2}
                                 imageIndex={0}
@@ -67,8 +68,9 @@ export default function ProductDetailScreen({ route }) {
                                     </View>
                                 )}
                             />
-                            <ImageSlider images={pictures} onPress={() => setIsOpen(!IsOpen)} />
-                        </>
+                            <SwiperComponent />
+                            {/* <ImageSlider images={pictures} onPress={() => setIsOpen(!IsOpen)} /> */}
+                        </PictureContainer>
                     ) : (
                         <LottieFile animationData={animationData} message="No picture found" />
                     )}
@@ -95,6 +97,11 @@ export default function ProductDetailScreen({ route }) {
         );
     }
 }
+
+const PictureContainer = styled.View`
+    height: 400px;
+`;
+
 const BottomContainer = styled.View`
     display: flex;
     flex-direction: row;
