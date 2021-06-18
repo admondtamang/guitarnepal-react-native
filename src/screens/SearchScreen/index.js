@@ -29,7 +29,6 @@ const SearchScreen = () => {
         return (
             <ListItem thumbnail>
                 <Left>
-                    {console.log(item)}
                     <Thumbnail square source={{ uri: item.images[0]?.src }} />
                 </Left>
                 <Body>

@@ -7,8 +7,6 @@ import { user_login } from "../../api/user";
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async ({ username, password }, { rejectWithValue }) => {
     try {
-        console.log(username, password);
-
         const req = await user_login({ username, password });
         const user = jwt_decode(req.token);
         return { ...req, user };
@@ -16,7 +14,6 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async ({ username, p
         if (!err.response) {
             throw err;
         }
-        console.log(err);
         return rejectWithValue(err.response.data);
     }
 });

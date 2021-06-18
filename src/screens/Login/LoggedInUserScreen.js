@@ -20,7 +20,6 @@ export default function LoggedInUserScreen() {
     if (isLoading) {
         return <Loading />;
     }
-    console.log(user);
 
     const { user_display_name, user_email, user_nicename } = user;
     const photoUrl =

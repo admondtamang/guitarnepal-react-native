@@ -6,9 +6,9 @@ import store from "./src/redux/configureStore";
 import { Provider } from "react-redux";
 
 import { Root as NativeBase } from "native-base";
-// import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from "redux-persist/integration/react";
 
-// import { persistStore } from "redux-persist";
+import { persistStore } from "redux-persist";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function App() {
@@ -16,17 +16,17 @@ export default function App() {
     const queryClient = new QueryClient();
 
     LogBox.ignoreAllLogs(true);
-    // let persistor = persistStore(store);
+    let persistor = persistStore(store);
 
     return (
         <NativeBase>
             <QueryClientProvider client={queryClient}>
                 <Provider store={store}>
-                    {/* <PersistGate loading={null} persistor={persistor}> */}
-                    <SafeAreaProvider>
-                        <Root />
-                    </SafeAreaProvider>
-                    {/* </PersistGate> */}
+                    <PersistGate loading={null} persistor={persistor}>
+                        <SafeAreaProvider>
+                            <Root />
+                        </SafeAreaProvider>
+                    </PersistGate>
                 </Provider>
             </QueryClientProvider>
         </NativeBase>

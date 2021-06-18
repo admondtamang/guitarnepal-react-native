@@ -14,7 +14,7 @@ export default function LoginScreen({ navigation }) {
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.data);
-    console.log(user);
+
     if (user && Object.keys(user).length !== 0) {
         return <LoggedInUserScreen />;
     }
@@ -25,13 +25,10 @@ export default function LoginScreen({ navigation }) {
 
     const onSubmit = async (values, actions) => {
         try {
-            console.log(values);
             dispatch(fetchUser({ username: values.username, password: values.password }));
-
             setIsLoggedIn(!isLoggedIn);
         } catch (e) {
             actions.setFieldError("general", e.message);
-            console.log(e);
         } finally {
             actions.setSubmitting(false);
         }

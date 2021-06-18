@@ -39,7 +39,7 @@ export default function Home() {
 }
 
 const Header = styled.View`
-    padding: 10px;
+    padding: 5px 10px;
     /* margin-top: 30px; */
     flex-direction: row;
     justify-content: space-between;

@@ -22,7 +22,6 @@ const SignupScreen = ({ navigation }) => {
 
     const onSubmit = async (values, actions) => {
         try {
-            console.log(values);
             await user_signUp(values);
             actions.setSubmitting(false);
             // ToastAndroid.show("A pikachu appeared nearby !", ToastAndroid.SHORT);
