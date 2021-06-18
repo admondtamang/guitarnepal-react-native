@@ -82,7 +82,7 @@ export default function TopTabBarContent() {
 
     if (status === "success")
         return (
-            // <Container>
+            // <Container showsHorizontalScrollIndicator={false}>
             <FlatList
                 nestedScrollEnabled
                 data={formatData(response, numColumns)}
@@ -98,14 +98,28 @@ export default function TopTabBarContent() {
                         <Title>Featured</Title>
                     </>
                 }
+                ListFooterComponent={
+                    <>
+                        <Title>Guitar</Title>
+                        <FlatList
+                            horizontal
+                            data={response}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={renderItem}
+                            ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                    </>
+                }
                 numColumns={numColumns}
                 ListEmptyComponent={showEmptyListView}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
             />
-            /* </Container> */
+            // </Container>
         );
 }
-const Container = styled.ScrollView`
+const Container = styled(ScrollView)`
     /* background-color: blue; */
 `;

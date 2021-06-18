@@ -21,9 +21,9 @@ export default function CartItem({ item }) {
         <Container>
             <Image source={{ uri: item?.images[0]?.src }} style={styles.cartImage} />
             <Description>
-                <Subheading numberOfLines={2} style={{ fontWeight: "bold" }}>
+                <Text numberOfLines={2} style={{ fontWeight: "bold" }}>
                     {item.name}
-                </Subheading>
+                </Text>
                 <Price>Rs. {item.price}</Price>
                 <QuantityContainer>
                     <IconButton icon="plus" size={18} onPress={() => dispatch(INCREASE_CART(item))} />
@@ -58,6 +58,7 @@ const Container = styled.View`
     flex-direction: row;
     padding: 10px;
     background-color: aliceblue;
+    margin-bottom: 10px;
 `;
 const Description = styled.View`
     flex-grow: 1;

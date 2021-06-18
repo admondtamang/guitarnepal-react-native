@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import useFetch from "../../utils/hooks/useFetch";
 import Image from "react-native-image-progress";
 import ProgressBar from "react-native-progress";
+import ImageViewer from "react-native-image-zoom-viewer";
 const { width } = Dimensions.get("window");
 const Container = styled.View`
     flex: 1;
@@ -133,6 +134,7 @@ export default function MyCarousel() {
 
                 {data.map((item, i) => (
                     <View key={i} style={{ borderRadius: 10 }} title={<Text numberOfLines={1}>{item.title}</Text>}>
+                        <ImageViewer />
                         <Image
                             source={{ uri: item.illustration }}
                             indicator={ProgressBar}

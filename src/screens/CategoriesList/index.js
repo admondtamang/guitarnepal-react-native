@@ -21,7 +21,7 @@ export default function CategoriesList() {
     }
     return (
         <SafeAreaContainer>
-            <Title>Categories List</Title>
+            <Title style={{ fontWeight: "bold" }}>Categories List</Title>
             {isResolved &&
                 response.map((res, index) => (
                     <List.Item

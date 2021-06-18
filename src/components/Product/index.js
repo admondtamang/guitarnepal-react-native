@@ -60,7 +60,7 @@ const Picture = styled(ProgressiveImage)`
 `;
 
 const Container = styled.TouchableOpacity`
-    width: 48%;
+    width: 180px;
     position: relative;
     border-radius: 5;
     margin-bottom: 15;
