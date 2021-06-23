@@ -73,4 +73,5 @@ const Title = styled.Text`
 const Price = styled.Text`
     color: grey;
     text-align: left;
+    font-size: 13px;
 `;

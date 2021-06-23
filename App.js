@@ -5,7 +5,7 @@ import { LogBox } from "react-native";
 import store from "./src/redux/configureStore";
 import { Provider } from "react-redux";
 
-import { Root as NativeBase } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { persistStore } from "redux-persist";
@@ -30,7 +30,7 @@ export default function App() {
     // }
 
     return (
-        <NativeBase>
+        <NativeBaseProvider>
             <QueryClientProvider client={queryClient}>
                 <Provider store={store}>
                     <PersistGate loading={null} persistor={persistor}>
@@ -40,6 +40,6 @@ export default function App() {
                     </PersistGate>
                 </Provider>
             </QueryClientProvider>
-        </NativeBase>
+        </NativeBaseProvider>
     );
 }

@@ -39,7 +39,7 @@ export default function MyTabs() {
         >
             <Tab.Screen name="Latest" component={Latest} />
             <Tab.Screen name="Brand" component={Brand} />
-            <Tab.Screen name="Traditional" component={Traditional} />
+            <Tab.Screen name="Tradition" component={Traditional} />
         </Tab.Navigator>
     );
 }

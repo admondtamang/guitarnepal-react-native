@@ -3,7 +3,6 @@ import { View, ScrollView } from "react-native";
 import useFetchQuery from "../../utils/hooks/useFetchQuery";
 import { Subheading, Title } from "react-native-paper";
 import Loading from "../../components/Loading";
-import ImageSlider from "../../components/ImageSlider";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../redux/product/productSlice";
@@ -69,7 +68,6 @@ export default function ProductDetailScreen({ route }) {
                                 )}
                             />
                             <SwiperComponent />
-                            {/* <ImageSlider images={pictures} onPress={() => setIsOpen(!IsOpen)} /> */}
                         </PictureContainer>
                     ) : (
                         <LottieFile animationData={animationData} message="No picture found" />
@@ -107,8 +105,8 @@ const BottomContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
-    border-top-left-radius: 10;
-    border-top-right-radius: 10;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     background-color: grey;
 `;
 const SalePrice = styled.Text`

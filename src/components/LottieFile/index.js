@@ -25,5 +25,5 @@ const Message = styled.Text`
 const Container = styled.View`
     display: flex;
     flex-direction: column;
-    height: 220;
+    height: 220px;
 `;

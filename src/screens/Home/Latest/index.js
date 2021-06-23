@@ -1,16 +1,14 @@
 import React from "react";
 import { View, Text, ScrollView, FlatList } from "react-native";
-import { Card, Title } from "react-native-paper";
+import { Title } from "react-native-paper";
 import styled from "styled-components";
-import MyCarousel from "../../../components/Carousel";
 import Product from "../../../components/Product";
 import { WIDTH } from "../../../utils/screenSize";
 
-import useFetch from "../../../utils/hooks/useFetch";
 import Loading from "../../../components/Loading";
-import ImageSlider from "../../../components/ImageSlider";
 import useFetchQuery from "../../../utils/hooks/useFetchQuery";
 import Carousel from "../../../components/CustomCarosel/Carousel";
+
 export const dummyData = [
     {
         title: "Anise Aroma Art Bazar",
@@ -91,8 +89,6 @@ export default function TopTabBarContent() {
                 renderItem={renderItem}
                 ListHeaderComponent={
                     <>
-                        {/* <ImageSlider images={images} /> */}
-                        {/* <MyCarousel /> */}
                         <Carousel data={dummyData} />
 
                         <Title>Featured</Title>
@@ -100,7 +96,14 @@ export default function TopTabBarContent() {
                 }
                 ListFooterComponent={
                     <>
-                        <Title>Guitar</Title>
+                        <TopBarCategory>
+                            <View>
+                                <Title>Guitar</Title>
+                            </View>
+                            <View>
+                                <Title>More</Title>
+                            </View>
+                        </TopBarCategory>
                         <FlatList
                             horizontal
                             data={response}
@@ -120,6 +123,12 @@ export default function TopTabBarContent() {
             // </Container>
         );
 }
+
+const TopBarCategory = styled(View)`
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+`;
 const Container = styled(ScrollView)`
     /* background-color: blue; */
 `;
