@@ -5,7 +5,7 @@ import { IconButton, List, Title, Subheading } from "react-native-paper";
 import styled from "styled-components";
 import { DECREASE_CART, INCREASE_CART, REMOVE_FROM_CART } from "../../redux/cart/cartSlice";
 import { useDispatch } from "react-redux";
-import { Toast } from "native-base";
+import { Toast, Container as NContainer } from "native-base";
 export default function CartItem({ item }) {
     const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ export default function CartItem({ item }) {
         <Container>
             <Image source={{ uri: item?.images[0]?.src }} style={styles.cartImage} />
             <Description>
-                <Text numberOfLines={2} style={{ fontWeight: "bold" }}>
+                <Text numberOfLines={2} style={{ fontWeight: "bold" }} onPress={() => {}}>
                     {item.name}
                 </Text>
                 <Price>Rs. {item.price}</Price>
@@ -38,8 +38,8 @@ export default function CartItem({ item }) {
 
 const DeleteButton = styled(IconButton)`
     position: absolute;
-    bottom: 5;
-    right: 10;
+    bottom: 5px;
+    right: 10px;
 `;
 
 const QuantityContainer = styled.View`
@@ -48,21 +48,21 @@ const QuantityContainer = styled.View`
     flex-direction: row;
     max-width: 100px;
     /* background-color: lightblue; */
-    border-radius: 20;
+    border-radius: 20px;
     justify-content: flex-start;
 `;
 const Container = styled.View`
     display: flex;
-    border-radius: 5;
+    border-radius: 5px;
     justify-content: space-between;
     flex-direction: row;
     padding: 10px;
     background-color: aliceblue;
     margin-bottom: 10px;
 `;
-const Description = styled.View`
+const Description = styled(NContainer)`
     flex-grow: 1;
-    margin-left: 10px;
+    padding: 0 10px;
 `;
 
 const Price = styled(Subheading)`

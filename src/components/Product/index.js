@@ -62,8 +62,8 @@ const Picture = styled(ProgressiveImage)`
 const Container = styled.TouchableOpacity`
     width: 180px;
     position: relative;
-    border-radius: 5;
-    margin-bottom: 15;
+    border-radius: 5px;
+    margin-bottom: 15px;
 `;
 
 const Title = styled.Text`
