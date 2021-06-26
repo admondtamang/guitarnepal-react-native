@@ -40,6 +40,8 @@ export default function MyTabs() {
             <Tab.Screen name="Latest" component={Latest} />
             <Tab.Screen name="Brand" component={Brand} />
             <Tab.Screen name="Tradition" component={Traditional} />
+            <Tab.Screen name="Traditions" component={Traditional} />
+            <Tab.Screen name="Traditioen" component={Traditional} />
         </Tab.Navigator>
     );
 }

@@ -10,26 +10,26 @@ import styled from "styled-components";
 import { selectCartTotal } from "../../redux/cart/cartSelector";
 import { useDispatch, useSelector } from "react-redux";
 import { EMPTY_CART } from "../../redux/cart/cartSlice";
-import axiosInstance from "../../utils/axios";
-import { ORDERS } from "../../utils/constants";
 import { useToast } from "native-base";
+import { postPlaceOrder } from "../../api/checkout";
 
 export default function CheckOutScreen({ navigation }) {
     const dispatch = useDispatch();
 
     const toast = useToast();
-    const cart = useSelector((state) => state.cart.cartItems);
+    const cartItems = useSelector((state) => state.cart.cartItems);
 
     const [checked, setChecked] = useState(false);
+
     const SignupSchema = Yup.object().shape({
-        username: Yup.string().required(),
-        email:Yup.email().required(),
-        address1:Yup.string().required(),
-        phone: Yup.string(),required(),
-        city: Yup.string.required()
+        first_name: Yup.string().required(),
+        email: Yup.string().email().required(),
+        address1: Yup.string().required(),
+        city: Yup.string().required(),
+        phone: Yup.number().required(),
     });
 
-    if (cart.items <= 0) {
+    if (cartItems.length <= 0) {
         toast.show({
             title: "Something went wrong",
             status: "error",
@@ -37,17 +37,17 @@ export default function CheckOutScreen({ navigation }) {
         });
         navigation.navigate("Home");
     }
-    console.log(cart);
 
     const onSubmit = async (values, actions) => {
         try {
-            console.log(values, "==", cartItems);
             actions.setSubmitting(false);
             const order = {
                 payment_method: "bacs",
                 payment_method_title: "Cash on delivery",
-                billing: { values },
-                line_items: cartItems,
+                billing: values,
+                line_items: cartItems.map(({ product_id, quantity }) => {
+                    return { product_id, quantity };
+                }),
                 shipping_lines: [
                     {
                         method_id: "flat_rate",
@@ -56,10 +56,10 @@ export default function CheckOutScreen({ navigation }) {
                     },
                 ],
             };
-            // axiosInstance.post(ORDERS, values);
+            await postPlaceOrder(order);
+
             // dispatch(EMPTY_CART());
-            // ToastAndroid.show("A pikachu appeared nearby !", ToastAndroid.SHORT);
-            navigation.navigate("Login");
+            navigation.navigate("Home");
         } catch (error) {
             actions.setFieldError("general", error.message);
         }
@@ -72,13 +72,14 @@ export default function CheckOutScreen({ navigation }) {
                 <Title>Total : {selectCartTotal}</Title>
 
                 <Formik
-                    initialValues={{ email: "ad@gf.com", phone: "1", address1: "a2" }}
+                    initialValues={{ first_name: "Testing", city: "sakl", email: "ad@gf.com", phone: "1", address1: "a2" }}
                     validationSchema={SignupSchema}
                     onSubmit={onSubmit}
                 >
                     {(formikProps) => (
                         <>
-                            <StyledInput label="Address1" formikProps={formikProps} formikKey="address1" placeholder="Address" />
+                            <StyledInput label="Full Name" formikProps={formikProps} formikKey="first_name" placeholder="Full Name" />
+                            <StyledInput label="Address1" formikProps={formikProps} formikKey="address_1" placeholder="Address" />
                             <StyledInput label="City" formikProps={formikProps} formikKey="city" placeholder="City" />
                             <StyledInput label="Email" formikProps={formikProps} formikKey="email" placeholder="Email" />
                             <StyledInput label="Phone" formikProps={formikProps} formikKey="phone" placeholder="Phone" />
@@ -104,7 +105,7 @@ export default function CheckOutScreen({ navigation }) {
                                 Checkout
                             </Button>
                             {/* <pre>{JSON.stringify(formikProps, null, 2)}</pre> */}
-                            <Text>{JSON.stringify(formikProps, null, 2)}</Text>
+                            {/* <Text>{JSON.stringify(formikProps, null, 2)}</Text> */}
                         </>
                     )}
                 </Formik>

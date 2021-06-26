@@ -1,12 +1,12 @@
 import * as React from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import { FlatList, StyleSheet, View, Text, Image } from "react-native";
 import { Searchbar, Title } from "react-native-paper";
 import styled from "styled-components";
 import SkeletonArticle from "../../components/Skeleton/SkeletonArticle";
 import useFetch from "../../utils/hooks/useFetch";
-import { List, ListItem, Thumbnail, Left, Body, Right, Button } from "native-base";
 import { useNavigation } from "@react-navigation/core";
 import SafeAreaContainer from "../../components/SafeAreaContainer";
+import { Button } from "react-native-elements/dist/buttons/Button";
 const SearchScreen = () => {
     const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = React.useState("");
@@ -27,9 +27,9 @@ const SearchScreen = () => {
             });
         };
         return (
-            <ListItem thumbnail>
+            <ListItem onPress={onPress}>
                 <Left>
-                    <Thumbnail square source={{ uri: item.images[0]?.src }} />
+                    <Image source={{ uri: item.images[0]?.src }} height={50} width={50} />
                 </Left>
                 <Body>
                     <Text>{item.name}</Text>
@@ -59,15 +59,13 @@ const SearchScreen = () => {
                 </>
             )}
             {isResolved && (
-                <List>
-                    <FlatList
-                        data={response}
-                        renderItem={renderItem}
-                        ListHeaderComponent={<Title>Search {searchQuery && `"${searchQuery}"`}</Title>}
-                        keyExtractor={(item) => item?.id.toString()}
-                        ListEmptyComponent={<Text>No Instrument Found</Text>}
-                    />
-                </List>
+                <FlatList
+                    data={response}
+                    renderItem={renderItem}
+                    ListHeaderComponent={<Title>Search {searchQuery && `"${searchQuery}"`}</Title>}
+                    keyExtractor={(item) => item?.id.toString()}
+                    ListEmptyComponent={<Text>No Instrument Found</Text>}
+                />
             )}
         </SafeAreaContainer>
     );
@@ -76,5 +74,12 @@ const SearchScreen = () => {
 const Container = styled.SafeAreaView`
     flex: 1;
 `;
+const ListItem = styled(View)`
+    display: flex;
+    justify-content: space-between;
+`;
+const Body = styled(View)``;
+const Left = styled(View)``;
+const Right = styled(View)``;
 
 export default SearchScreen;

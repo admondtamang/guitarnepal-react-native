@@ -16,7 +16,6 @@ import { Badge } from "react-native-paper";
 import { Text } from "react-native";
 import ShoppingCartIcon from "../components/ShoppingCartIcon";
 import Cart from "../screens/Cart";
-import BillingScreen from "../screens/Billing";
 import LoginScreen from "../screens/Login";
 import SignupScreen from "../screens/Signup";
 import CheckOutScreen from "../screens/CheckOut";
@@ -64,7 +63,6 @@ export default function StackNavigator() {
                 }}
             />
             <Stack.Screen name="CartScreen" component={Cart} options={{ headerShown: false }} />
-            <Stack.Screen name="BillingScreen" component={BillingScreen} />
         </Stack.Navigator>
     );
 }

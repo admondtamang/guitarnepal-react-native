@@ -11,16 +11,16 @@ function infiniteScroll(dataList) {
     let scrollValue = 0,
         scrolled = 0;
 
-    setInterval(function () {
-        scrolled++;
-        if (scrolled < numberOfData) scrollValue = scrollValue + customWidth;
-        else {
-            scrollValue = 0;
-            scrolled = 0;
-        }
+    // setInterval(function () {
+    //     scrolled++;
+    //     if (scrolled < numberOfData) scrollValue = scrollValue + customWidth;
+    //     else {
+    //         scrollValue = 0;
+    //         scrolled = 0;
+    //     }
 
-        this.flatList.scrollToOffset({ animated: true, offset: scrollValue });
-    }, 3000);
+    //     this.flatList.scrollToOffset({ animated: true, offset: scrollValue });
+    // }, 3000);
 }
 
 const Carousel = ({ data }) => {

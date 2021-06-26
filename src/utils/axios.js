@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../redux/configureStore";
+// import store from "../redux/configureStore";
 const baseURL = "https://guitarnepal.com.np/";
 
 const axiosInstance = axios.create({
