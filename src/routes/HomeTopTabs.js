@@ -4,6 +4,8 @@ import colors from "../utils/colors";
 import Brand from "../screens/Home/Brands";
 import Latest from "../screens/Home/Latest";
 import Traditional from "../screens/Home/Traditional";
+import Ukulele from "../screens/Home/Ukulee";
+import Electric from "../screens/Home/Electric";
 const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
@@ -38,10 +40,10 @@ export default function MyTabs() {
             }}
         >
             <Tab.Screen name="Latest" component={Latest} />
-            <Tab.Screen name="Brand" component={Brand} />
+            <Tab.Screen name="Ukulele" component={Ukulele} />
             <Tab.Screen name="Tradition" component={Traditional} />
-            <Tab.Screen name="Traditions" component={Traditional} />
-            <Tab.Screen name="Traditioen" component={Traditional} />
+            <Tab.Screen name="Electric" component={Electric} />
+            <Tab.Screen name="Brand" component={Brand} />
         </Tab.Navigator>
     );
 }

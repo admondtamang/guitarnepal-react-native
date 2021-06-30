@@ -1,16 +1,20 @@
 import * as React from "react";
-import { FlatList, StyleSheet, View, Text, Image } from "react-native";
-import { Searchbar, Title } from "react-native-paper";
+import { FlatList, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Searchbar, Title } from "react-native-paper";
 import styled from "styled-components";
 import SkeletonArticle from "../../components/Skeleton/SkeletonArticle";
 import useFetch from "../../utils/hooks/useFetch";
 import { useNavigation } from "@react-navigation/core";
 import SafeAreaContainer from "../../components/SafeAreaContainer";
 import { Button } from "react-native-elements/dist/buttons/Button";
+import animationData from "../../../assets/lottie/no-picture.json";
+import LottieFile from "../../components/LottieFile";
+import { Image } from "react-native-elements/dist/image/Image";
+
 const SearchScreen = () => {
     const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = React.useState("");
-    const url = "wp-json/wc/v3/products?search=" + searchQuery;
+    const url = "wp-json/wc/v3/products?search=" + searchQuery + "&orderby=popularity";
 
     const {
         response,
@@ -19,7 +23,7 @@ const SearchScreen = () => {
     } = useFetch(url);
 
     const onChangeSearch = (query) => setSearchQuery(query);
-
+    console.log("search", response);
     const renderItem = ({ item }) => {
         const onPress = () => {
             navigation.navigate("ProductDetail", {
@@ -29,7 +33,15 @@ const SearchScreen = () => {
         return (
             <ListItem onPress={onPress}>
                 <Left>
-                    <Image source={{ uri: item.images[0]?.src }} height={50} width={50} />
+                    {item.images.length === 0 ? (
+                        <LottieFile animationData={animationData} message="No picture found" />
+                    ) : (
+                        <Image
+                            style={{ width: 100, height: 100 }}
+                            PlaceholderContent={<ActivityIndicator />}
+                            source={{ uri: item?.images[0]?.src }}
+                        />
+                    )}
                 </Left>
                 <Body>
                     <Text>{item.name}</Text>
@@ -74,7 +86,7 @@ const SearchScreen = () => {
 const Container = styled.SafeAreaView`
     flex: 1;
 `;
-const ListItem = styled(View)`
+const ListItem = styled(TouchableOpacity)`
     display: flex;
     justify-content: space-between;
 `;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Animated } from "react-native";
+import { View, ScrollView, Animated, Text } from "react-native";
 import useFetchQuery from "../../utils/hooks/useFetchQuery";
 import { Subheading, Title } from "react-native-paper";
 import Loading from "../../components/Loading";
@@ -11,25 +11,32 @@ import HTML from "react-native-render-html";
 import LottieFile from "../../components/LottieFile";
 import animationData from "../../../assets/lottie/no-picture.json";
 import { ADD_TO_CART } from "../../redux/cart/cartSlice";
-import { Button, Text } from "native-base";
 import SwiperComponent from "../../components/SwiperComponent";
+import useFetch from "../../utils/hooks/useFetch";
 
+import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 export default function ProductDetailScreen({ route }) {
     const slug = route.params.slug;
     let url = "/wp-json/wc/v3/products?slug=" + slug;
     const dispatch = useDispatch();
 
     const scrollY = new Animated.Value(0);
-    const { response, error, isLoading, status } = useFetchQuery("productDetail", url);
+    // const { response, error, isLoading, status } = useFetchQuery("productDetail", url);
+    const {
+        response,
+        error,
+        status: { isLoading, isResolved, isRejected },
+    } = useFetch(url);
 
-    if (error) {
-        return <Text>Error , {error.message}</Text>;
+    if (isRejected) {
+        return <Text>Error , {error?.message}</Text>;
     }
-    if (status === "loading") {
+    if (isLoading) {
         return <Loading />;
     }
 
-    if (status === "success") {
+    if (isResolved) {
         const { id, price, variations, name, on_sale, description, regular_price, images } = response[0];
         const pictures = images?.map((img) => {
             return { uri: img.src };
@@ -64,12 +71,20 @@ export default function ProductDetailScreen({ route }) {
                     </View>
                 </Animated.ScrollView>
                 <BottomContainer>
-                    <Button onPress={handleAddToCart}>Add To Cart</Button>
+                    <CustomButton
+                        buttonStyle={{ width: WIDTH - 20 }}
+                        icon={<Icon name="arrow-right" size={15} color="white" />}
+                        title="Add To Cart"
+                        onPress={handleAddToCart}
+                    />
                 </BottomContainer>
             </>
         );
     }
 }
+const CustomButton = styled(Button)`
+    width: 100%;
+`;
 
 const PictureContainer = styled.View`
     height: 400px;
@@ -82,7 +97,7 @@ const BottomContainer = styled.View`
     padding: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: grey;
+    /* background-color: grey; */
 `;
 const SalePrice = styled.Text`
     color: red;

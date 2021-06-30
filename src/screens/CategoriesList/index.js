@@ -12,6 +12,7 @@ export default function CategoriesList() {
         error,
         status: { isLoading, isRejected, isResolved },
     } = useFetch(url);
+    console.log(response);
     const navigation = useNavigation();
 
     function onPress(id) {

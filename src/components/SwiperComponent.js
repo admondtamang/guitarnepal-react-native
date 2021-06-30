@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Button, Image, Modal, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import { Image } from "react-native-elements";
 
 import ImageView from "react-native-image-viewing";
 import Swiper from "react-native-swiper";
-import { Portal } from "react-native-paper";
-import { View } from "react-native-ui-lib";
 
 const styles = StyleSheet.create({
     wrapper: {},
@@ -26,12 +25,7 @@ export default function SwiperComponent({ images }) {
             <Swiper activeDotColor="#FFF" style={styles.wrapper}>
                 {images.map((item, index) => (
                     <TouchableOpacity key={index} style={styles.slide} onPress={() => setIsVisible(true)}>
-                        <Image
-                            source={{
-                                uri: item.uri,
-                            }}
-                            style={{ height: 450, width: 400 }}
-                        />
+                        <Image style={{ width: 400, height: 450 }} PlaceholderContent={<ActivityIndicator />} source={{ uri: item.uri }} />
                     </TouchableOpacity>
                 ))}
             </Swiper>

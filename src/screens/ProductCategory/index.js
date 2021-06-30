@@ -12,7 +12,7 @@ export default function ProductCategory({ route, id }) {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [response, setResponse] = useState([]);
-    const url = `wp-json/wc/v3/products?category=${id ? id : route.params.id}&page=` + page;
+    const url = `wp-json/wc/v3/products?category/${id ? id : route.params.id}&page=` + page + "&orderby=popularity";
     const offset = 5;
 
     useEffect(() => getData(), [page]);
@@ -43,7 +43,7 @@ export default function ProductCategory({ route, id }) {
 
     const showEmptyListView = () => {
         return (
-            <View style={{ flex: 1, flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 10 }}>
+            <View style={{ flex: 1, flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                 <Text style={{ color: "black" }}>{"No Data to Display"}</Text>
             </View>
         );
@@ -60,7 +60,7 @@ export default function ProductCategory({ route, id }) {
     };
 
     const renderFooter = () => (
-        <Button style={{ marginBottom: 20 }} icon="more" mode="text" onPress={loadMoreData} loading={loading}>
+        <Button style={{ marginBottom: 40 }} icon="more" mode="text" onPress={loadMoreData} loading={loading}>
             Load More
         </Button>
     );
@@ -76,12 +76,14 @@ export default function ProductCategory({ route, id }) {
                 renderItem={renderItem}
                 // ListHeaderComponent={<Title>Featured</Title>}
                 numColumns={numColumns}
-                style={{ paddingVertical: 10 }}
                 ListEmptyComponent={showEmptyListView}
                 ListFooterComponent={renderFooter}
                 // onEndReached={loadMoreData}
                 onEndReachedThreshold={0.1}
                 // ListFooterComponent={renderFooter}
+
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
             />
         );
     } else
@@ -100,6 +102,9 @@ export default function ProductCategory({ route, id }) {
                     // onEndReached={loadMoreData}
                     onEndReachedThreshold={0.1}
                     // ListFooterComponent={renderFooter}
+
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
                 />
             </Container>
         );
