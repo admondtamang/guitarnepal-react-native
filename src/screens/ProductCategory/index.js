@@ -12,7 +12,7 @@ export default function ProductCategory({ route, id }) {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [response, setResponse] = useState([]);
-    const url = `wp-json/wc/v3/products?category/${id ? id : route.params.id}&page=` + page + "&orderby=popularity";
+    const url = `wp-json/wc/v3/products?category=${id ? id : route.params.id}&page=` + page + "&orderby=popularity";
     const offset = 5;
 
     useEffect(() => getData(), [page]);
@@ -74,6 +74,7 @@ export default function ProductCategory({ route, id }) {
                 columnWrapperStyle={{ justifyContent: "space-between" }}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}
+                style={{ marginTop: 10 }}
                 // ListHeaderComponent={<Title>Featured</Title>}
                 numColumns={numColumns}
                 ListEmptyComponent={showEmptyListView}

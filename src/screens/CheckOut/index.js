@@ -59,8 +59,9 @@ export default function CheckOutScreen({ navigation }) {
             await postPlaceOrder(order);
 
             // dispatch(EMPTY_CART());
-            navigation.navigate("Home");
+            navigation.navigate("OrderPlaced");
         } catch (error) {
+            console.log(error);
             actions.setFieldError("general", error.message);
         }
     };

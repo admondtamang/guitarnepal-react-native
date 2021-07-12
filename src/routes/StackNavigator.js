@@ -10,15 +10,12 @@ import SearchScreen from "../screens/SearchScreen";
 import ProductCategory from "../screens/ProductCategory";
 import CategoriesList from "../screens/CategoriesList";
 
-import { FontAwesome } from "@expo/vector-icons";
-import colors from "../utils/colors";
-import { Badge } from "react-native-paper";
-import { Text } from "react-native";
 import ShoppingCartIcon from "../components/ShoppingCartIcon";
 import Cart from "../screens/Cart";
 import LoginScreen from "../screens/Login";
 import SignupScreen from "../screens/Signup";
 import CheckOutScreen from "../screens/CheckOut";
+import OrderPlaced from "../screens/CheckOut/OrderPlaced";
 export default function StackNavigator() {
     const Stack = createStackNavigator();
     const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -55,6 +52,7 @@ export default function StackNavigator() {
             <Stack.Screen name="ProductCategory" component={ProductCategory} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} />
             <Stack.Screen name="Checkout" component={CheckOutScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OrderPlaced" component={OrderPlaced} options={{ headerShown: false }} />
             <Stack.Screen
                 name="ProductDetail"
                 component={ProductDetailScreen}

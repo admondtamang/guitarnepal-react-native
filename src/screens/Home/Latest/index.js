@@ -8,6 +8,7 @@ import { WIDTH } from "../../../utils/screenSize";
 import Loading from "../../../components/Skeleton/SkeletonHomeScreen";
 import useFetchQuery from "../../../utils/hooks/useFetchQuery";
 import Carousel from "../../../components/CustomCarosel/Carousel";
+import CategoryWithProduct from "../../../components/CategoryWithProduct";
 
 export const dummyData = [
     {
@@ -88,21 +89,11 @@ export default function TopTabBarContent({ navigation }) {
                 ListHeaderComponent={
                     <>
                         <Carousel data={dummyData} />
-                        <>
-                            <TopBarCategory onPress={() => onPress(76)}>
-                                <Title>Guitar Collection</Title>
-                                <Subheading>More</Subheading>
-                            </TopBarCategory>
-                            <FlatList
-                                horizontal
-                                data={response}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={renderItem}
-                                ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                            />
-                        </>
+                        <CategoryWithProduct title="Guitar" id={76} />
+                        <CategoryWithProduct title="Ukulele" id={85} />
+                        <CategoryWithProduct title="Pianos & keyboards" id={72} />
+                        <CategoryWithProduct title="Guitar Accessories" id={86} />
+
                         <Title>Featured</Title>
                     </>
                 }

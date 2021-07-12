@@ -15,7 +15,7 @@ import SwiperComponent from "../../components/SwiperComponent";
 import useFetch from "../../utils/hooks/useFetch";
 
 import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Entypo";
 export default function ProductDetailScreen({ route }) {
     const slug = route.params.slug;
     let url = "/wp-json/wc/v3/products?slug=" + slug;
@@ -73,7 +73,7 @@ export default function ProductDetailScreen({ route }) {
                 <BottomContainer>
                     <CustomButton
                         buttonStyle={{ width: WIDTH - 20 }}
-                        icon={<Icon name="arrow-right" size={15} color="white" />}
+                        icon={<Icon name="shopping-basket" size={15} color="white" />}
                         title="Add To Cart"
                         onPress={handleAddToCart}
                     />

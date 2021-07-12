@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image, Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
+const carouselHeight = height / 5;
 const CarouselItem = ({ item, navigation }) => {
     function onPress(id) {
         navigation.navigate("ProductCategory", {
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     cardView: {
         flex: 1,
         width: width - 60,
-        height: height / 4,
+        height: carouselHeight,
         backgroundColor: "white",
         margin: 10,
         borderRadius: 10,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: width - 60,
-        height: height / 4,
+        height: carouselHeight,
         borderRadius: 10,
     },
     itemTitle: {

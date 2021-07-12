@@ -4,11 +4,16 @@ import { WIDTH } from "../../utils/screenSize";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { Badge } from "react-native-paper";
 import ProgressiveImage from "../../components/ProgressiveImage";
-
-export default function Product({ item }) {
+export default function Product({ item, column }) {
     const { id, name, price, regular_price, images, on_sale, slug } = item;
-    var discount;
 
+    const Container = styled.TouchableOpacity`
+        width: ${(props) => (column ? "140px" : "180px")};
+        position: relative;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    `;
+    var discount;
     const navigation = useNavigation();
     const onPress = () => {
         navigation.navigate("ProductDetail", {
@@ -40,6 +45,7 @@ export default function Product({ item }) {
         </Container>
     );
 }
+
 const SalePrice = styled.Text`
     color: red;
     padding-right: 15px;
@@ -55,15 +61,8 @@ const StyledBadge = styled(Badge)`
 const Picture = styled(ProgressiveImage)`
     /* background-color: grey; */
     width: 100%;
-    height: 170px;
+    height: 140px;
     border-radius: 5px;
-`;
-
-const Container = styled.TouchableOpacity`
-    width: 180px;
-    position: relative;
-    border-radius: 5px;
-    margin-bottom: 15px;
 `;
 
 const Title = styled.Text`
