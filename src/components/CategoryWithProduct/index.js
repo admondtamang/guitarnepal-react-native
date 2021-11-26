@@ -15,7 +15,6 @@ export default function CategoryWithProduct({ title, id }) {
     const url = "wp-json/wc/v3/products?category=" + id + "&orderby=popularity ";
     const navigation = useNavigation();
     const { response, error, isLoading, status } = useFetchQuery(title, url);
-    console.log(response);
     if (error) {
         return <Text>Error , {error.message}</Text>;
     }

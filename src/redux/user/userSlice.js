@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { user_login } from "../../api/user";
 
@@ -18,11 +19,30 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async ({ username, p
     }
 });
 
+export const fetchRefreshToken = createAsyncThunk("user/fetchRefreshToken", async (_, { getState, rejectWithValue }) => {
+    const url = "https://guitarnepal.com.np/wp-json/jwt-auth/v1/token";
+    try {
+        const req = await axios.post(url, {
+            username: "guitarpasal",
+            password: "@@admond##",
+        });
+        const user = jwt_decode(req.data.token);
+
+        return { ...req.data, user };
+    } catch (err) {
+        if (!err.response) {
+            throw err;
+        }
+
+        return rejectWithValue(err.response.data);
+    }
+});
+
 const user = createSlice({
     name: "user",
     initialState: {
         data: null,
-        // user: initialUser,
+        user: null,
         status: null,
     },
 
@@ -49,6 +69,17 @@ const user = createSlice({
             state.data = payload;
         },
         [fetchUser.rejected]: (state, { payload }) => {
+            state.status = "failed";
+        },
+
+        [fetchRefreshToken.pending]: (state, action) => {
+            state.status = "loading";
+        },
+        [fetchRefreshToken.fulfilled]: (state, { payload }) => {
+            state.status = "success";
+            state.user = payload;
+        },
+        [fetchRefreshToken.rejected]: (state, action) => {
             state.status = "failed";
         },
     },

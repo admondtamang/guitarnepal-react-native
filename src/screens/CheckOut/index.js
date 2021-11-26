@@ -56,7 +56,9 @@ export default function CheckOutScreen({ navigation }) {
                     },
                 ],
             };
+
             await postPlaceOrder(order);
+            dispatch(EMPTY_CART());
 
             // dispatch(EMPTY_CART());
             navigation.navigate("OrderPlaced");

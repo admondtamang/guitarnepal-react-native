@@ -23,7 +23,6 @@ const SearchScreen = () => {
     } = useFetch(url);
 
     const onChangeSearch = (query) => setSearchQuery(query);
-    console.log("search", response);
     const renderItem = ({ item }) => {
         const onPress = () => {
             navigation.navigate("ProductDetail", {
