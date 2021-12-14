@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, FlatList, TouchableOpacity } from "react-native";
-import { Title, Subheading } from "react-native-paper";
+import { Title } from "react-native-paper";
 import styled from "styled-components";
 import Product from "../../../components/Product";
 import { WIDTH } from "../../../utils/screenSize";
