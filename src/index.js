@@ -4,8 +4,6 @@ import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as 
 import { DefaultTheme as PaperDefaultTheme, DarkTheme as PaperDarkTheme, Provider as PaperProvider } from "react-native-paper";
 import StackNavigator from "./routes/StackNavigator";
 import { StatusBar } from "expo-status-bar";
-import { useSelector } from "react-redux";
-import TabNavigator from "./routes/TabNavigator";
 
 const CombinedDarkTheme = {
     ...PaperDarkTheme,

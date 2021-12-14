@@ -1,33 +1,49 @@
 import axios from "axios";
 import { consumerKey, consumerSecret, baseURL } from "../config/config";
+import store from "../redux/configureStore";
+import { fetchRefreshToken } from "../redux/user/userSlice";
 const axiosInstance = axios.create({
     baseURL,
-    auth: {
-        username: consumerKey,
-        password: consumerSecret,
-    },
+
 });
 
-// Add a request interceptor
-// axiosInstance.interceptors.request.use(
-//     (config) => {
-//         if (store.user.data && Object.keys(store.user.data).length !== 0) {
-//             let token = store.user?.data?.token;
+axiosInstance.interceptors.response.use(
+    function (response) {
+        // Any status code that lie within the range of 2xx cause this function to trigger
+        // Do something with response data
+        return response;
+    },
+    async function (error) {
+        const expectedError = error.response;
 
-//             // let token = getAuthorizationToken();
-//             if (token) {
-//                 config.headers.Authorization = `Bearer ${token}`;
-//                 config.headers["Access-Control-Allow-Origin"] = "*";
-//                 config.headers["Content-Type"] = "application/json";
-//             }
+        const status = error.response.data.data.status;
 
-//             return config;
-//         }
-//     },
-//     (error) => {
-//         alert("interceptor request has error");
-//         return Promise.reject(error);
-//     }
-// );
+        if (expectedError) {
+            // orginal request
+            const originalRequest = error.response.config;
+            if (status === 500) {
+                toast.error("Server is not responding, please try again later.");
+            }
+            // For authorized refresh token
+            if (status === 401 || 403) {
+                // provide new tokens.
+                const res = await store.dispatch(fetchRefreshToken());
+
+                if (res.meta.requestStatus === "fulfilled") {
+                    // window.location.reload();
+
+                    const request = {
+                        ...originalRequest,
+                        headers: {
+                            Authorization: "Bearer " + res.payload.token,
+                        },
+                    };
+                    return axios(request);
+                }
+            }
+            return Promise.reject(error);
+        }
+    }
+);
 
 export default axiosInstance;

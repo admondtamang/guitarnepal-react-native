@@ -5,9 +5,12 @@ npm-debug.*
 *.p8
 *.p12
 *.key
+*.pem
 *.mobileprovision
 *.orig.*
 web-build/
 
 # macOS
 .DS_Store
+keystore.jks
+upload_certificate.pem
